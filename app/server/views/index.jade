@@ -1,0 +1,89 @@
+doctype 5
+html
+	head
+		title Colludo
+		link(rel='stylesheet', href='/style/index.css')
+	body
+		div#home
+
+		div#header
+			div#company
+				img(src='http://204.236.234.28:8080/img/index/octopunkLogo.png')
+				h1 OctoPunk
+			form#loginForm.login-form(method='post')
+				div.login-email
+					input.login-input(type='text', name='email', placeholder='Email Address')
+					label.checkbox
+						input(type='checkbox') 
+						|  Remember
+				div.login-password
+					input.login-input(type='password', name='password', placeholder='Password')
+					a.login-link(href='#') Forgot Password?
+				button.login-button(type='submit') Login
+
+		div.banner
+			h1 Colludo
+
+		div.navbar
+			div.main-navbar
+				ul.nav
+					li.scroll-position.left-0.active
+						a(href='#home') Home
+					li.scroll-position.left-1
+						a(href='#features') Features
+					li.scroll-position.left-2
+						a(href='#about') About Us
+					li.button
+						button.signup-button Sign Up
+					li.right-2
+						a(href='#') Wiki
+					li.right-1
+						a(href='/guide') Guide
+					li.right-0
+						a(href='#') Forum
+
+		div.content
+			h2 What is Colludo?
+			p.justify 
+				| Welcome! Colludo is an online strategy game played right in your browser! Build an 
+				| empire through developing your cities as well as conquering or allying other 
+				| players around you. Colludo is very experimental in that we are striving to 
+				| create a social sandbox genre of game. For instance, after conquering a 
+				| neighbor you have the option of what new form of government you want to create 
+				| with them.  Whether you want to inflict harsh taxes in the hopes they don’t 
+				| rebel, or share power and try to work together, the options are all there. 
+
+			h2
+				span#features &nbsp;
+				| Features
+			p.center A massive online, persistent world to play on with your friends. 
+			br
+			p.center City Building. 
+			br
+			p.center World Conquest.
+			br
+			p.center Alliance Managment and Control.
+			br
+
+	
+			h2 
+				span#about &nbsp;
+				| About Us
+			p.center Joel Simon and Daniel Belchamber are currently undergraduates at Carnegie Mellon who love game design and share a vision for new kind of browser mmorts.  
+
+		div#fader.fade
+
+		div#signup.fade
+			form#signUpForm.signup-form(method='post')
+				h2 Sign Up for Colludo!
+				hr
+				input.signup-input(type='text', name='email', placeholder='Email Address')
+				input.signup-input(type='text', name='username', placeholder='Username')
+				input.signup-input(type='password', name='password', placeholder='Password')
+				input.signup-input(type='password', name='confirm', placeholder='Confirm Password')
+				button#signup-button.signup-button(type='submit') Create Player
+
+		script(type='text/javascript', src='/js/jQuery/jquery-1.10.2.min.js')
+		script(type='text/javascript', src='/js/formValidators/signup-validator.js')
+		script(type='text/javascript', src='/js/controllers/index-controller.js')
+

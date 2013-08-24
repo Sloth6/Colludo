@@ -1,0 +1,199 @@
+doctype 5
+html
+	head
+		title Colludo
+		link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css')
+		link(rel='stylesheet', href='/style/game.css')
+	body
+		div#ghost
+
+		div#view
+			div#navbar-container
+				div#navbar
+					ul.nav
+						li#username
+							a.dropdown(href='#') Username
+							ul.sub_menu.hidden
+								li#profile
+									a.top-0(href='#') Profile
+								li#settings
+									a.top-1(href='#') Settings
+								li#logout
+									a.top-2(href='#') Logout
+						li#world-link.left-0
+							a(href='#world') World
+						li#city-link.left-1
+							a(href='#city') City
+						li#message-link.left-2
+							a(href='#message') Messaging
+					
+		div#storage
+			div#window_0
+				div#world.panel-wrapper
+					div#worldPanel
+						div#ThreeJS
+						input#moveArmy(type='button', value='Move Army')
+						input#attack(type='button', value='Attack!')
+						input#showCoords(type='button', value='Show Coords')
+						div#worldZoomSlider
+						div#worldInfoPane.ui-widget-content.accordion-container
+							div.accordion-outer
+								h3.outer-h3
+									| Tile Info
+								div.outer-div
+									div.accordion-inner
+										h3 Other City
+										div
+											p This is a description of the Other City.
+									div.accordion-inner.last
+										h3 Other Army
+										div
+											p This is a description of the Other Army.
+							div.accordion-outer
+								h3.outer-h3
+									| Your Cities
+								div.outer-div
+									div.accordion-inner
+										h3 City 1
+										div
+											p This is a description of your 1st City.
+									div.accordion-inner.last
+										h3 City 2
+										div
+											p This is a description of your 2nd City.
+							div.accordion-outer
+								h3.outer-h3
+									| Your Armies
+								div.outer-div
+									div.accordion-inner
+										h3 Army 1
+										div
+											p This is a description of your 1st Army.
+									div.accordion-inner.last
+										h3 Army 2
+										div
+											p This is a description of your 2nd Army.
+											
+			div#window_1
+				div#city.panel-wrapper
+					div#cityPanel
+						canvas#cityCanvas(width='625', height='625')
+						div#cityInfoPane.ui-widget-content.accordion-container
+						//- div#cityName
+						div#cityZoomSlider
+						div#resourceBar
+							ul
+								li.food 
+									img(src='http://204.236.234.28:8080/img/resourceBar/meat-icon.png') 
+									span 
+										| Food
+									ul.sub_menu.hidden
+										li.income
+											a.top-0(href='#') default
+										li.stored
+											a.top-1(href='#') default
+										li.timer
+											a.top-2(href='#') default
+								li.wood 
+									img(src='http://204.236.234.28:8080/img/resourceBar/log-icon.png')
+									span 
+										| Wood
+									ul.sub_menu.hidden
+										li.income
+											a.top-0(href='#') default
+										li.stored
+											a.top-1(href='#') default
+										li.timer
+											a.top-2(href='#') default
+								li.stone 
+									img(src='http://204.236.234.28:8080/img/resourceBar/rock-icon.png')
+									span
+										| Stone
+									ul.sub_menu.hidden
+										li.income
+											a.top-0(href='#') default
+										li.stored
+											a.top-1(href='#') default
+										li.timer
+											a.top-2(href='#') default
+								li.population
+									img(src='http://204.236.234.28:8080/img/resourceBar/pop-icon.png')
+									span 
+										| Work/Pop
+									ul.sub_menu.hidden
+										li.work
+											a.top-0(href='#') default
+										li.pop
+											a.top-1(href='#') default
+			div#window_2
+				div#message.panel-wrapper
+					div#messagePanel.panel
+						form#compose
+							input(type='text', name='to', placeholder='To')
+							br
+							input(type='text', name='subject', placeholder='Subject')
+							br
+							textarea(name='message')
+							input#sendButton(type='submit', value='Send')
+						div#messageEnlarged
+							div#messageView
+						div#messageScroller
+							div#header
+								h1 Messages
+							ul#messageList
+							input#composeButton(type='button', value='Compose')
+
+		script(src='/socket.io/socket.io.js')
+		script(type='text/javascript', src='http://code.jquery.com/jquery-1.9.1.js')
+		script(type='text/javascript', src='http://code.jquery.com/ui/1.10.3/jquery-ui.js')
+		script(type='text/javascript', src='/js/jQuery/core.js')
+		script(type='text/javascript', src='/js/jQuery/widget.js')
+		script(type='text/javascript', src='/js/jQuery/mouse.js')
+		script(type='text/javascript', src='/js/jQuery/draggable.js')
+		script(type='text/javascript', src='/js/jQuery/resizable.js')
+
+		script(type='text/javascript', src='/js/threejs/Three.js')
+		<script src="http://stemkoski.github.io/Three.js/js/Detector.js"></script>
+		<script src="http://stemkoski.github.io/Three.js/js/Stats.js"></script>
+		<script src="http://stemkoski.github.io/Three.js/js/OrbitControls.js"></script>
+		<script src="http://stemkoski.github.io/Three.js/js/THREEx.KeyboardState.js"></script>
+		<script src="http://stemkoski.github.io/Three.js/js/THREEx.FullScreen.js"></script>
+		<script src="http://stemkoski.github.io/Three.js/js/THREEx.WindowResize.js"></script>
+		script(type='text/javascript', src='/js/threejs/renderstats.js')
+
+
+		script(type='text/javascript', src='/js/astar/astar.js')
+		script(type='text/javascript', src='/js/astar/graph.js')
+
+		script(type='text/javascript', src='/js/threejs/tween.js')
+
+		script(type='text/javascript', src='/js/onLoad.js')
+
+		script(type='text/javascript', src='/js/modals/city.js')
+		script(type='text/javascript', src='/js/modals/world.js')
+
+		script(type='text/javascript', src='/js/views/cityCanvas.js')
+		script(type='text/javascript', src='/js/views/cityInfo.js')
+		script(type='text/javascript', src='/js/views/message.js')
+		script(type='text/javascript', src='/js/views/worldCanvas.js')
+		script(type='text/javascript', src='/js/views/worldInfo.js')
+
+		script(type='text/javascript', src='/js/controllers/cityCanvas-controller.js')
+		script(type='text/javascript', src='/js/controllers/cityInfo-controller.js')
+		script(type='text/javascript', src='/js/controllers/message-controller.js')
+		script(type='text/javascript', src='/js/controllers/worldCanvas-controller.js')
+		script(type='text/javascript', src='/js/controllers/worldInfo-controller.js')
+		script(type='text/javascript', src='/js/controllers/navbar-controller.js')
+
+		script(type='text/javascript', src='/js/classes/world/army.js')
+
+
+		script(type='text/javascript', src='/js/sockets/city-listeners.js')
+		script(type='text/javascript', src='/js/sockets/city-requests.js')
+		script(type='text/javascript', src='/js/sockets/message-listeners.js')
+		script(type='text/javascript', src='/js/sockets/message-requests.js')
+		script(type='text/javascript', src='/js/sockets/world-listeners.js')
+		script(type='text/javascript', src='/js/sockets/world-requests.js')
+		script(type='text/javascript', src='/js/sockets/onLoad-requests.js')
+		script(type='text/javascript', src='/js/sockets/onLoad-listeners.js')
+
