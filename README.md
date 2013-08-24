@@ -1,5 +1,5 @@
 Colludo
 =======
 
-Colludo by OctoPunk
+Colludo by OctoPunk \n
 Written by Daniel and Joel
