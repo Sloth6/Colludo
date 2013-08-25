@@ -183,6 +183,7 @@ function drawMap2(ctx, width, height) {
 				ctx.drawImage(cityTileImgs['field'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 				tileImg = cityTileImgs[tileType];
 				ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
+			}
 		};
 	};
 
