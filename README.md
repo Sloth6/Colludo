@@ -1,7 +1,8 @@
 Colludo
 =======
 
-Colludo by OctoPunk \n
+Colludo by OctoPunk
+
 Written by Daniel and Joel
 
-BITCHES
+BITCHES and HOES
