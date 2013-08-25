@@ -64,7 +64,9 @@ var prices = {
 	//world editing.
 	'field'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
 	'rocks'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
-	'trees'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
+	'trees0'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
+	'trees1'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
+	'trees2'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
 	'river'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
 }
 var incomes = {
@@ -83,7 +85,9 @@ var incomes = {
 
 	'field'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
 	'rocks'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
-	'trees'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
+	'trees0'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
+	'trees1'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
+	'trees2'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
 	'river'		 :	{'crop' : 0, 'wood' : 0, 'ore' : 0, 'workers'  : 0},
 }
 var troopPrices = {

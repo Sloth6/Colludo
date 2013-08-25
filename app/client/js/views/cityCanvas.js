@@ -178,9 +178,11 @@ function drawMap2(ctx, width, height) {
 		for (var col = NUM_TILES-1; col >=0 ; col--) {
 			tileId = row * NUM_TILES + col;
 			tileType = decode[city.tiles[tileId]];
-
-			if (tileType !== 'void' && tileType !== 'river') {
+							screenCoords = screenXY(tileId, width, height);
 				ctx.drawImage(cityTileImgs['field'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
+
+			if (tileType !== 'void' && tileType !== 'river' && tileType !== 'field') {
+
 				tileImg = cityTileImgs[tileType];
 				ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 			}

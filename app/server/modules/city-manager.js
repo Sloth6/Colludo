@@ -34,7 +34,9 @@ var tilePrices = {
 	// city editing.
 	'field'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'rocks'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees0'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees1'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees2'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'river'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 };
 
@@ -53,7 +55,9 @@ var tileIncomes = {
 
 	'field'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'rocks'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees0'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees1'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees2'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'river'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 };
 
@@ -72,7 +76,9 @@ var buildTimes = {
 
 	'field'		:	0,
 	'rocks'		:	0,
-	'trees'		:	0,
+	'trees0'		:	0,
+	'trees1'		:	0,
+	'trees2'		:	0,
 	'river'		:	0,
 }
 
@@ -114,11 +120,6 @@ var decode = {
 	'ta' : 'tavern',
 	'x' : 'void'
 };
-
-// var decode = ['field', 'river', 'trees', 'rocks', 'sawmill', 'mine', 
-// 	'house', 'farm', 'capital', 'barracks', 'stable', 'warehouse', 'cranny', 
-// 	'tavern', 'void'];
-
 
 exports.loadWorld = loadWorld;
 exports.createCity = createCity;
