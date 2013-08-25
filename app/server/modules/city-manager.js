@@ -1,12 +1,10 @@
 
 var RM 		= require('./army-manager.js')
-  , MS 		= require('./mapServer')
   , fs 		= require('fs')
   , citiesTable = require('./mysql/cities.js')
   , assert 	= require('assert');
 
-
-var db = require('/var/www/html/colludo/app/server/modules/db.js');
+var db = require('./db.js');
 
 var troopPrices = {
 	'soldiers'	: 	{'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 0},

@@ -1,7 +1,6 @@
 /*
  *	socket.js
  */
-// var MS = require('./mapServer');
 var cityManager = require('./city-manager.js');
 var accountManager = require('./account-manager.js');
 var armyManager = require('./army-manager.js');
@@ -9,7 +8,7 @@ var messageManager = require('./message-manager.js');
 var socketio = require('socket.io');
 var battleManager = require('./battle-manager.js');
 var contractManager = require('./contract-manager.js');
-var db = require('/var/www/html/colludo/app/server/modules/db.js');
+var db = require('./db.js');
 
 var sio;
 var connected = 0;	

@@ -4,8 +4,8 @@ var http = require('http')
   , app = express()
   , server = app.listen(8080)
   , cookieParser = express.cookieParser('secret secret')
-  , sessionStore = new connect.middleware.session.MemoryStore()
-  , toobusy = require('toobusy');
+  , sessionStore = new connect.middleware.session.MemoryStore();
+  // , toobusy = require('toobusy');
 
 app.configure(function(){
 	// app.set('port', 8080);
@@ -22,12 +22,12 @@ app.configure(function(){
 	app.use(express.static(__dirname + '/app/client'));
 	// The absolute first piece of middle-ware we would register, to block requests
 	// before we spend any time on them.
-	app.use(function(req, res, next) {
-	  // check if we're toobusy() - note, this call is extremely fast, and returns
-	  // state that is cached at a fixed interval
-	  if (toobusy()) res.send(503, "I'm busy right now, sorry.");
-	  else next();
-	});
+	// app.use(function(req, res, next) {
+	//   // check if we're toobusy() - note, this call is extremely fast, and returns
+	//   // state that is cached at a fixed interval
+	//   if (toobusy()) res.send(503, "I'm busy right now, sorry.");
+	//   else next();
+	// });
 
 });
 

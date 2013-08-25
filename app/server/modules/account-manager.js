@@ -2,7 +2,6 @@ var db = require('./db.js');
 var world = require('./world-manager.js');
 
 var crypto = require('crypto');
-var MM = require('./mapServer.js');
 var AM = require('./army-manager');
 var CM = require('./city-manager');
 var world = require('./world-manager.js');

@@ -1,4 +1,5 @@
-var db = require('/var/www/html/colludo/app/server/modules/db.js');
+// var db = require('/var/www/html/colludo/app/server/modules/db.js');
+var db = require(__dirname + '/../db.js');
 
 exports.selectAll = selectAll;
 exports.select = select;

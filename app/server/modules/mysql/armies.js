@@ -2,7 +2,8 @@ exports.select = select;
 exports.selectAll = selectAll;
 exports.deleteArmy = deleteArmy;
 exports.insert = insert;
-var db = require('/var/www/html/colludo/app/server/modules/db.js');
+// var db = require('/var/www/html/colludo/app/server/modules/db.js');
+var db = require(__dirname + '/../db.js');
 
 function select(armyId, callback) {
 	var query = 'SELECT id, player_id, username, tile_id, soldiers, calvary'+

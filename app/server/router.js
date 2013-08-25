@@ -1,7 +1,6 @@
 
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
-var MS = require('./modules/mapServer');
 
 module.exports = function(app) {
 

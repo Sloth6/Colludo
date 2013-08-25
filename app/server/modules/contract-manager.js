@@ -1,5 +1,5 @@
 var contractsTable = require('./mysql/contracts.js');
-var cityManager = require('/var/www/html/colludo/app/server/modules/city-manager.js');
+var cityManager = require('./city-manager.js');
 
 exports.init = init;
 exports.executeContract = executeContract;

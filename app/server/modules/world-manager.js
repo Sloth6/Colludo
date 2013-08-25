@@ -9,7 +9,7 @@
 */
 var cityManager = require('./city-manager.js');
 var armyManager = require('./army-manager.js');
-var db = require('/var/www/html/colludo/app/server/modules/db.js');
+var db = require('./db.js');
 
 var world = new World(48,48);
 armyManager.loadWorld(world, function() {

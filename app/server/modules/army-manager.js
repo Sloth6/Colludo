@@ -1,5 +1,5 @@
 var armiesTable = require('./mysql/armies.js');
-var db = require('/var/www/html/colludo/app/server/modules/db.js');
+var db = require('./db.js');
 
 module.exports.init = init;
 module.exports.setArmyData  = setArmyData;
