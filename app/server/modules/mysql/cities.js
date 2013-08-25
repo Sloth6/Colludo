@@ -37,7 +37,7 @@ var startingCity =
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,  x, x, x, x, x,  x, x, x, x, x,'+ 
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,  x, x, x, x, x,  x, x, x, x, x';
 
-st0at0igCity = JSON.stringify(startingCity.replace(/ /g,'').split(','));
+startingCity = JSON.stringify(startingCity.replace(/ /g,'').split(','));
 				// if (city.tiles[tileId] >= 0) {
 				// 	if (city.tiles[tileId] == 0){
 				// 		if (Math.floor(Math.random()*12) == 0){
