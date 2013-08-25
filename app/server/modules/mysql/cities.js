@@ -13,17 +13,17 @@ var db = mysql.createConnection({
 var startingCity = 
 	'x, x, x, x, x,  x, x, x, x, x,  x, x, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
 	'x, x, x, x, x,  x, x, x, x, x,  x, f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, x, x,  f0,f0,f0,f0,f0, f0,t, t, t, f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, x, f0, f0,f0,f0,f0,f0, f0,f0,t, t, f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, f0,f0, f0,f0,f0,f0,f0, f0,f0,t, t, f0, f0,f0,f0,f0,f0,'+
+	'x, x, x, x, x,  x, x, x, x, x,  f0,f0,f0,f0,f0, f0,t0,t1,t2,f0, f0,f0,f0,f0,f0,'+
+	'x, x, x, x, x,  x, x, x, x, f0, f0,f0,f0,f0,f0, f0,f2,t0,t1,f0, f0,f0,f0,f0,f0,'+
+	'x, x, x, x, x,  x, x, x, f0,f0, f0,f0,f0,f0,f0, f0,f0,t1,t0,f0, f0,f0,f0,f0,f0,'+
 	'x, x, x, x, x,  x, x, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
 	'x, x, x, x, x,  x, r, r, f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  f0,f0,r, f0,f0, t, t, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, f0, f0,r, r, f0,f0, f0,t, t, f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+	'x, x, x, x, x,  f0,f0,r, f0,f0, t0,t0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+	'x, x, x, x, f0, f0,r, r, f0,f0, f0,t0,t0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
 	'x, x, x, f0,f0, f0,r, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
 	'x, x, f0,f0,f0, f0,r, r, r, r,  f0,c, f0,f0,f0, f0,f0,f0,f0,ro, ro,ro,f0,f0,f0,'+
-	'x, t, f0,f0,f0, f0,f0,f0,f0,r,  f, h, f0,f0,f0, f0,f0,f0,ro,ro, f0,f0,f0,f0,f0,'+
-	't, t, f0,f0,f0, f0,f0,f0,f0,r,  f0,f, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+	'x, t0,f0,f0,f0, f0,f0,f0,f0,r,  f, h, f0,f0,f0, f0,f0,f0,ro,ro, f0,f0,f0,f0,f0,'+
+	't0,t0,f0,f0,f0, f0,f0,f0,f0,r,  f0,f, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,r,  f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,'+ 
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,r,  r, r, r, r, f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,'+ 
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,r, r,  f0,f0,f0,f0,f0, f0,f0,x, x, x,'+ 
@@ -37,7 +37,7 @@ var startingCity =
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,  x, x, x, x, x,  x, x, x, x, x,'+ 
 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,  x, x, x, x, x,  x, x, x, x, x';
 
-startingCity = JSON.stringify(startingCity.replace(/ /g,'').split(','));
+st0at0igCity = JSON.stringify(startingCity.replace(/ /g,'').split(','));
 				// if (city.tiles[tileId] >= 0) {
 				// 	if (city.tiles[tileId] == 0){
 				// 		if (Math.floor(Math.random()*12) == 0){

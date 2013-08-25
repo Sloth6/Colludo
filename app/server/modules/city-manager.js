@@ -76,28 +76,12 @@ var buildTimes = {
 	'river'		:	0,
 }
 
-// var encode = {
-// 	'field'		: 0,
-// 	'river'		: 1,
-// 	'trees' 	: 2,
-// 	'rocks'		: 3,
-// 	'sawmill'	: 4,
-// 	'mine'		: 5,
-// 	'house'		: 6,
-// 	'farm'      : 7,
-// 	'capital'	: 8,
-// 	'barracks'	: 9,
-// 	'stable'	: 10,
-// 	'warehouse'	: 11,
-// 	'cranny'	: 12,
-// 	'tavern'	: 13,
-// 	'void'		: 14,
-// };
-
 var encode = {
 	'field'		: 'f0',
-	'river'		: 'r',
-	'trees' 	: 't',
+	'river0'	: 'r0',
+	'trees0' 	: 't0',
+	'trees1' 	: 't1',
+	'trees2' 	: 't2',
 	'rocks'		: 'ro',
 	'sawmill'	: 'sm',
 	'mine'		: 'm',
@@ -107,14 +91,16 @@ var encode = {
 	'barracks'	: 'b',
 	'stable'	: 'st',
 	'warehouse'	: 'w',
-	'cranny'	: 'c',
-	'tavern'	: 't',
+	'cranny'	: 'cr',
+	'tavern'	: 'ta',
 	'void'		: 'x',
 };
 var decode = {
 	'f0' : 'field',
 	'r' : 'river',
-	't' : 'trees',
+	't0' : 'trees0',
+	't1' : 'trees1',
+	't2' : 'trees2',
 	'ro' : 'rocks',
 	'sm' : 'sawmill',
 	'm' : 'mine'	,
@@ -124,8 +110,8 @@ var decode = {
 	'b' : 'barracks',
 	'st' : 'stable',
 	'w' : 'warehouse',
-	'c' : 'cranny',
-	't' : 'tavern',
+	'cr' : 'cranny',
+	'ta' : 'tavern',
 	'x' : 'void'
 };
 

@@ -10,7 +10,9 @@ var selectingType = null;
 var encode = {
 	'field'		: 'f0',
 	'river0'	: 'r0',
-	'trees' 	: 't',
+	'Trees0' 	: 't0',
+	'Trees1' 	: 't1',
+	'Trees2' 	: 't2',
 	'rocks'		: 'ro',
 	'sawmill'	: 'sm',
 	'mine'		: 'm',
@@ -27,10 +29,9 @@ var encode = {
 var decode = {
 	'f0' : 'field',
 	'r' : 'river',
-	// 'r0' : 'river0',
-	// 'r1' : 'river1',
-	// 'r2' : 'river2',
-	't' : 'trees',
+	't0' : 'Trees0',
+	't1' : 'Trees1',
+	't2' : 'Trees2',
 	'ro' : 'rocks',
 	'sm' : 'sawmill',
 	'm' : 'mine'	,
@@ -45,35 +46,6 @@ var decode = {
 	'x' : 'void'
 };
 
-//Map tile name to tile code. ⁄
-// var encode = {
-// 	'field'		: 0,
-// 	'river'		: 1,
-// 	'trees' 	: 2,
-// 	'rocks'		: 3,
-// 	'sawmill'	: 4,
-// 	'mine'		: 5,
-// 	'house'		: 6,
-// 	'farm'      : 7,
-// 	'capital'	: 8,
-// 	'barracks'	: 9,
-// 	'stable'	: 10,
-// 	'warehouse'	: 11,
-// 	'cranny'	: 12,
-// 	'tavern'	: 13,
-// 	'null'		: 14,
-
-// 	'buildingSawmill'	: -4,
-// 	'buildingMine'		: -5,
-// 	'buildingHouse'		: -6,
-// 	'buildingFarm'      : -7,
-// 	'buildingCapital'	: -8,
-// 	'buildingBarracks'	: -9,
-// 	'buildingStable'	: -10,
-// 	'buildingWarehouse'	: -11,
-// 	'buildingCranny'	: -12,
-// 	'buildingTavern'	: -13,
-// }
 var prices = {
 	//resource collectors. 
 	'farm'       :	{'crop' : 75, 'wood' : 90, 'ore' : 75, 'workers'  : 1},

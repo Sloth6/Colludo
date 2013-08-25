@@ -18,9 +18,6 @@ buildingImage.src = cityTilePath+'building.png';
 var selectedImg = new Image();
 selectedImg.src = cityTilePath+'selected.png';
 
-var selectedImg = new Image();
-selectedImg.src = cityTilePath+'selected.png';
-
 var cityBackgroundImg = new Image();
 cityBackgroundImg.src = cityTilePath+'cityBackground.png';
 
@@ -183,11 +180,9 @@ function drawMap2(ctx, width, height) {
 			tileType = decode[city.tiles[tileId]];
 
 			if (tileType !== 'void' && tileType !== 'river') {
-				screenCoords = screenXY(tileId, width, height);
+				ctx.drawImage(cityTileImgs['field'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 				tileImg = cityTileImgs[tileType];
-				// console.log(tileId,city.tiles[tileId], tileType, cityTileImgs, tileImg);
 				ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
-			}
 		};
 	};
 

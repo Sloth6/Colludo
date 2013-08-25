@@ -1,4 +1,5 @@
 var socket = io.connect('http://204.236.234.28:8080');
+// var socket = io.connect('http://localhost:8080');
 
 
 var player;
@@ -25,9 +26,13 @@ var cityCanvas
 
 var cityTilePath = '/img/cityTiles/';
 var cityTileNames = [
-	'field', 'river0', 'river1', 'river2', 'trees', 'rocks', 'sawmill',
+	'field', 
+	'river0', 'river1', 'river2',
+	'Trees0','Trees1','Trees2',
+	'rocks', 'sawmill',
 	'mine', 'house', 'farm', 'capital', 'barracks',
 	'stable', 'warehouse', 'cranny', 'tavern'];
+
 var cityTileImgs = {};//Image objects array.
 
 
