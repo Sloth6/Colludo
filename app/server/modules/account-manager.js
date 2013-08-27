@@ -30,7 +30,7 @@ exports.autoLogin = function(user, pass, callback) {
 
 exports.manualLogin = function(email, pass, callback) {
   	db.query('SELECT * FROM users WHERE email = ?', [sanitize(email).xss()], function(err, rows, fields) {
-		if (err) callback(err);
+		if (err) return callback(err);
 		if (rows.length == 0) {
 			callback('user-not-found');
 		} else if (md5(pass) !== rows[0].password) {

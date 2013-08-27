@@ -570,9 +570,9 @@ function orderTiles(sio, session, data, callback) {
 					'tileIds'    : data.tiles
 				});
 
-				for (var i = 0; i < cityData.tiles.length; i++) {
-					cityData.tiles[data.tiles[i]] = -encode[data.tileType];
-				};
+				// for (var i = 0; i < cityData.tiles.length; i++) {
+				// 	cityData.tiles[data.tiles[i]] = -encode[data.tileType];
+				// };
 
 				// console.log('ORDER: check 4', cityData);
 
