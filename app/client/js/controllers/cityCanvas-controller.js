@@ -230,7 +230,11 @@ function cityMouseMove(e){
 	}
 }
 
-function cityWheel(delta){
+function getJoystickPosition() {
+
+}
+
+function cityWheel(delta) {
 	// Zoom in
     if(delta > 0) {
     	if(tileWidth < 300) {
@@ -240,7 +244,7 @@ function cityWheel(delta){
 	    }
     }
     // Zoom Out
-    else if (tileWidth > 30){
+    else if (tileWidth > 30) {
     	cityView.x *= .97;
     	cityView.y *= .97;
     	tileWidth *= .97;
@@ -249,6 +253,7 @@ function cityWheel(delta){
     drawMap();
     drawSelected();
 }
+
 function cityBindUI(){
 	$('#cityZoomSlider').slider({
 		orientation: "vertical",
@@ -265,8 +270,12 @@ function cityBindUI(){
 			drawSelected();
 		}
 	});
-}
 
+	$('#joystick').draggable({ 
+		containment: '#cityJoystick',
+		scroll: false
+	});
+}
 
 
 function windowCity(can) {
