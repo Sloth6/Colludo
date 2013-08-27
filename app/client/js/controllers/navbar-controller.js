@@ -99,6 +99,8 @@ $('ul.nav li').on('click', function(event) {
 	var toId   = to[0].id;
 	var fromId = from[0].id;
 
+	// if (toId == 'message' || fromId == 'message')
+
 	if (fromId != toId) {
 		var direction = directions[fromId][toId];
 
