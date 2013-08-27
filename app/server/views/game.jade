@@ -27,6 +27,7 @@ html
 						li#message-link.left-2
 							a(href='#message') Messaging
 							p#new-messages 0
+			div#fader.hidden
 					
 		div#storage
 			div#window_0
@@ -143,6 +144,8 @@ html
 								h1 Messages
 							ul#messageList
 							input#composeButton(type='button', value='Compose')
+						div#message-close
+							img(src='app/client/img/closebutton.png')
 
 		script(src='/socket.io/socket.io.js')
 		script(type='text/javascript', src='http://code.jquery.com/jquery-1.9.1.js')

@@ -7,6 +7,8 @@
 $(document).ready(function() {
 	$('#view').prepend( $('#city') );
 	$('#city-link').addClass('active');
+	$('#view').append( $('#message') );
+	$('#message').addClass('hidden');
 });
 
 $(window).on('resize', function() {
@@ -99,14 +101,28 @@ $('ul.nav li').on('click', function(event) {
 	var toId   = to[0].id;
 	var fromId = from[0].id;
 
-	// if (toId == 'message' || fromId == 'message')
+	if (toId == 'message' ^ fromId == 'message') {
+		toggleMessaging(toId, fromId, to, from);
+	}
 
-	if (fromId != toId) {
+	else if (fromId != toId) {
 		var direction = directions[fromId][toId];
 
 		slide(from, to, direction, fromId, toId);
 	}
 });
+
+$('#message-close').on('click', function() {
+	console.log('fading...');
+	$('#fader').addClass('hidden');
+	$('#message').addClass('hidden');
+});
+
+function toggleMessaging(toId, fromId, to, from) {
+	// console.log('clicked message-link');
+	$('#fader').removeClass('hidden');
+	$('#message').removeClass('hidden');
+}
 
 function slide(from, to, direction, fromId, toId) {
 	var ghost  = $('#ghost');

@@ -114,6 +114,10 @@ body {
 	color: #555555;
 }
 
+.ui-slider .ui-slider-handle {
+	z-index: auto;
+}
+
 input, button, label, a {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -168,6 +172,17 @@ p {
 	left: 0;
 	height: 100%;
 	width: 100%;
+}
+
+#fader {
+	position: fixed;
+	background-color: black;
+	opacity: 0.7;
+
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
 }
 
 #storage {
@@ -818,6 +833,17 @@ p {
 				#messageEnlarged h6.subject {
 					text-align: center;
 				}
+
+		#message-close {
+			position: absolute;
+			right: 0;
+			top: -30px;
+		}
+		
+			#message-close img {
+				height: 20px;
+				width: 20px; 
+			}
 
 		#messageScroller {
 			position: absolute;
