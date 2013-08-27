@@ -53,18 +53,15 @@ function drawSquareAt(id,  w, h) {
 }
 
 function drawFoo(tileA, tileB) {
-
-	// console.log(tileA, tileB);
-	var start = {'row' : Math.min(tileA.row, tileB.row),
-				'col' : Math.min(tileA.col, tileB.col)};
-	var end = {'row' : Math.max(tileA.row, tileB.row),
-				'col' : Math.max(tileA.col, tileB.col)};
+	var start = {'row' : Math.min(tileA.row, tileB.row), 'col' : Math.min(tileA.col, tileB.col)};
+	var end = {'row' : Math.max(tileA.row, tileB.row), 'col' : Math.max(tileA.col, tileB.col)};
 	var id;
+	
 	for (var row = start.row; row <= end.row; row++) {
 		for (var col = start.col; col <= end.col; col++) {
+			// the id of the current tile. 
 			id = row*NUM_TILES + col;
-			// console.log(city.tiles[id] , city.tiles[tileA.id]);
-			if(city.tiles[id] == selectingType)drawSquareAt(id);
+			if (city.tiles[id] == selectingType) drawSquareAt(id);
 		}
 	}
 }

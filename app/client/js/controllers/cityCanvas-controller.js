@@ -467,9 +467,9 @@ function clientBuy(oldType, newType) {
 		return;
 	}
 	// Set map to building icons. 
-	for (var i = 0; i < selected.length; i++) {
-		city.tiles[selected[i]] = -encode[newType];
-	}
+	// for (var i = 0; i < selected.length; i++) {
+	// 	city.tiles[selected[i]] = -encode[newType];
+	// }
 	var cloneSelected = selected.slice(0);
 	var cloneType = newType;
 	// Tell server what we bought. 
