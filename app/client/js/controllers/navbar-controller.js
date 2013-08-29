@@ -113,7 +113,7 @@ $('ul.nav li').on('click', function(event) {
 });
 
 $('#message-close').on('click', function() {
-	console.log('fading...');
+	// console.log('fading...');
 	$('#fader').addClass('hidden');
 	$('#message').addClass('hidden');
 });
