@@ -1,5 +1,5 @@
-// var socket = io.connect('http://204.236.234.28:8080');
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://204.236.234.28:8080');
+// var socket = io.connect('http://localhost:8080');
 
 
 var player;
