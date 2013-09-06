@@ -149,13 +149,13 @@ module.exports = function(app) {
 
 	// creating new accounts
 	app.post('/login', function(req, res) {
-		console.log('manually logging in...', req.body.email, req.body.pass);
+		// console.log('manually logging in...', req.body.email, req.body.pass);
 		AM.manualLogin(req.body.email, req.body.pass, function(e, o) {
 			if (!o) {
 				// eq.session.user = o;
 				res.send(e, 400);
 			} else {
-				console.log('Log the fuck in!');
+				// console.log('Log the fuck in!');
 			    req.session.user = o; //{'id' : o.id, 'name' : o.username};
 			    // console.log('a,', o, req.param('remember-me'));
 				// if (req.param('remember-me') == 'true'){
@@ -163,7 +163,7 @@ module.exports = function(app) {
 				res.cookie('pass', o.password, { maxAge: 900000 });
 				// }
 				res.send(o, 200);
-				console.log('No, seriously, why won\'t it just log the fuck in?!');
+				// console.log('No, seriously, why won\'t it just log the fuck in?!');
 				// res.redirect('/game');
 			}
 		});
@@ -181,7 +181,7 @@ module.exports = function(app) {
 	app.post('/lost-password', function(req, res){
 	// look up the user's account via their email //
 		AM.getAccountByEmail(req.param('email'), function(o){
-			if (o){
+			if (o) {
 				res.send('ok', 200);
 				EM.dispatchResetPasswordLink(o, function(e, m){
 				// this callback takes a moment to return //
