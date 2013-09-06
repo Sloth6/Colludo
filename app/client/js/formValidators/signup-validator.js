@@ -119,12 +119,12 @@ function register(form, user, email, pass) {
 			    form.email.value = "";
 			    form.email.focus();
 
-			} else if (e.responseText == 'illegal-name'){
+			} else if (e.responseText == 'illigal-name'){
 			    alert("That username cannot be used.");
 			    form.username.value = "";
 			    form.username.focus();
 
-			} else if (e.responseText == 'illegal-email'){
+			} else if (e.responseText == 'illigal-email'){
 			    alert("That email cannot be used.");
 			    form.email.value = "";
 			    form.email.focus();

@@ -55,6 +55,12 @@ $('.scroll-position').on('click', function() {
 	window.location = $(this).children()[0].href;
 });
 
+// login handlers
+$('#loginForm').on('submit', function() {
+	event.preventDefault();
+	var form = $('#loginForm')[0];
+	loginUser(form);
+});
 
 // signup handlers
 $('.signup-button').on('click', function() {

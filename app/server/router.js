@@ -133,7 +133,7 @@ module.exports = function(app) {
 		}
 	});
 
-	// creating new accounts //
+	// creating new accounts
 	app.post('/signup', function(req, res) {
 		AM.addNewAccount(req.body,
 			function(e) {
@@ -145,6 +145,27 @@ module.exports = function(app) {
 				}
 			}
 		);
+	});
+
+	// creating new accounts
+	app.post('/login', function(req, res) {
+		console.log('manually logging in...');
+		AM.manualLogin(req.body.email, req.body.password, function(e, o) {
+			if (!o) {
+				// eq.session.user = o;
+				res.send(e, 400);
+			} else {
+				console.log('Log the fuck in!');
+			    req.session.user = o; //{'id' : o.id, 'name' : o.username};
+			    // console.log('a,', o, req.param('remember-me'));
+				// if (req.param('remember-me') == 'true'){
+				res.cookie('user', o.username, { maxAge: 900000 });
+				res.cookie('pass', o.password, { maxAge: 900000 });
+				// }
+				res.send(o, 200);
+				res.redirect('/game');
+			}
+		});
 	});
 
 	app.get('/logout', function(req, res) {
