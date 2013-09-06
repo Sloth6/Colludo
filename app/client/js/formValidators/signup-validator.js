@@ -93,7 +93,7 @@ function register(form, user, email, pass) {
 		type:     'post',
 		data:     {'user' : user, 'email' : email, 'pass' : pass},
 		success:  function(responseText, status) {
-			console.log('status', status)
+			console.log('status', status);
 			if (status == 'success') {
 			    alert("Successfully Registered: " + user + "!");
 			    form.username.value = "";
@@ -119,19 +119,16 @@ function register(form, user, email, pass) {
 			    form.email.value = "";
 			    form.email.focus();
 
-			} else if (e.responseText == 'illigal-name'){
+			} else if (e.responseText == 'illegal-name'){
 			    alert("That username cannot be used.");
 			    form.username.value = "";
 			    form.username.focus();
 
-			} else if (e.responseText == 'illigal-email'){
+			} else if (e.responseText == 'illegal-email'){
 			    alert("That email cannot be used.");
 			    form.email.value = "";
 			    form.email.focus();
 
-			   
-
-		
 			} else {
 				alert("An error has occured with your connection!");
 			    console.log(e);

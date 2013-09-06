@@ -34,11 +34,11 @@ module.exports = function(app) {
 		// console.log(req.session, req.param('remember-me'));
 		
 		AM.manualLogin(req.body.email, req.body.password, function(e, o){
-			if (!o){
+			if (!o) {
 				// eq.session.user = o;
 				res.send(e, 400);
-			}	else{
-			    req.session.user = o;//{'id' : o.id, 'name' : o.username};
+			} else {
+			    req.session.user = o; //{'id' : o.id, 'name' : o.username};
 			    // console.log('a,', o, req.param('remember-me'));
 				// if (req.param('remember-me') == 'true'){
 				res.cookie('user', o.username, { maxAge: 900000 });
@@ -67,7 +67,7 @@ module.exports = function(app) {
 	
 	app.get('/home', function(req, res) {
 	    if (req.session.user == null){
-	// if user is not logged-in redirect back to login page //
+		// if user is not logged-in redirect back to login page
 	        res.redirect('/');
 	    }   else{
 			res.render('home', {
@@ -77,6 +77,7 @@ module.exports = function(app) {
 			});
 	    }
 	});
+
 	app.get('/nuke', function(req, res) {
 		require('./modules/nuke').NUKE();
 		res.render('nuke', {});
@@ -86,7 +87,7 @@ module.exports = function(app) {
 		res.render('guide', {});
 	})
 
-	app.post('/home', function(req, res){
+	app.post('/home', function(req, res) {
 		if (req.param('user') != undefined) {
 			AM.updateAccount({
 				user 		: req.param('user'),
@@ -94,20 +95,20 @@ module.exports = function(app) {
 				email 		: req.param('email'),
 				country 	: req.param('country'),
 				pass		: req.param('pass')
-			}, function(e, o){
-				if (e){
+			}, function(e, o) {
+				if (e) {
 					res.send('error-updating-account', 400);
-				}	else{
+				} else {
 					req.session.user = o;
-			// update the user's login cookies if they exists //
-					if (req.cookies.user != undefined && req.cookies.pass != undefined){
+					// update the user's login cookies if user exists
+					if (req.cookies.user != undefined && req.cookies.pass != undefined) {
 						res.cookie('user', o.user, { maxAge: 900000 });
 						res.cookie('pass', o.pass, { maxAge: 900000 });	
 					}
 					res.send('ok', 200);
 				}
 			});
-		}	else if (req.param('logout') == 'true'){
+		} else if (req.param('logout') == 'true') {
 			res.clearCookie('user');
 			res.clearCookie('pass');
 			req.session.destroy(function(e){ res.send('ok', 200); });
@@ -115,7 +116,7 @@ module.exports = function(app) {
 	});
 	
 	app.get('/map', function(req, res) {
-		if (!req.session.user){
+		if (!req.session.user) {
 			// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    } else {
@@ -124,7 +125,7 @@ module.exports = function(app) {
 	});
 
 	app.get('/city', function(req, res) {
-		if (!req.session.user){
+		if (!req.session.user) {
 			// if user is not logged-in redirect back to login page //
 	       res.redirect('/');
 	    } else {
@@ -133,17 +134,19 @@ module.exports = function(app) {
 	});
 
 	// creating new accounts //
-	app.post('/signup', function(req, res){
+	app.post('/signup', function(req, res) {
 		AM.addNewAccount(req.body,
-			function(e){
-				if (e){
+			function(e) {
+				if (e) {
 					console.log(e);
 					res.send(e, 400);
-				} else{
+				} else {
 					res.send('success', 200);
 				}
-			});
+			}
+		);
 	});
+
 	app.get('/logout', function(req, res) {
 		res.cookie('user', null, { maxAge: 900000 });
 		res.cookie('pass', null, { maxAge: 900000 });
