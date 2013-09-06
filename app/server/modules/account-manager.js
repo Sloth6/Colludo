@@ -251,6 +251,7 @@ exports.getUserDataById = function(userId, callback) {
 // }
 
 var md5 = function(str) {
+	console.log('md5', str);
 	return crypto.createHash('md5').update(str).digest('hex');
 }
 

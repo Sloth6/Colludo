@@ -149,8 +149,8 @@ module.exports = function(app) {
 
 	// creating new accounts
 	app.post('/login', function(req, res) {
-		console.log('manually logging in...');
-		AM.manualLogin(req.body.email, req.body.password, function(e, o) {
+		console.log('manually logging in...', req.body.email, req.body.pass);
+		AM.manualLogin(req.body.email, req.body.pass, function(e, o) {
 			if (!o) {
 				// eq.session.user = o;
 				res.send(e, 400);
@@ -163,7 +163,8 @@ module.exports = function(app) {
 				res.cookie('pass', o.password, { maxAge: 900000 });
 				// }
 				res.send(o, 200);
-				res.redirect('/game');
+				console.log('No, seriously, why won\'t it just log the fuck in?!');
+				// res.redirect('/game');
 			}
 		});
 	});
