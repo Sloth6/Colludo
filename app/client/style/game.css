@@ -114,6 +114,10 @@ body {
 	color: #555555;
 }
 
+.ui-slider .ui-slider-handle {
+	z-index: auto;
+}
+
 input, button, label, a {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -168,6 +172,17 @@ p {
 	left: 0;
 	height: 100%;
 	width: 100%;
+}
+
+#fader {
+	position: fixed;
+	background-color: black;
+	opacity: 0.7;
+
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
 }
 
 #storage {
@@ -333,6 +348,18 @@ p {
 
 		ul.nav li:hover > a {
 			color: white;
+		}
+
+		ul.nav p#new-messages {
+			position: absolute;
+			left: 50%;
+			top: -15px;
+			line-height: 20px;
+			padding: 3px;
+			margin-left: -7px;
+			color: white;
+			background-color: red;
+			border-radius: 8px;
 		}
 
 	.hidden {
@@ -626,6 +653,32 @@ p {
 						padding-left: 1.8em;
 					}
 
+		#cityJoystick {
+			background-color: black;
+			position: absolute;
+			/*opacity: 0.8;*/
+
+			top: 420px;
+			left: 2%;
+			height: 40px;
+			width: 40px;
+			border-radius: 34px;
+			border: 14px solid white;
+		}
+
+			#joystick {
+				height: 22px;
+				width: 22px;
+
+				left: 13px;
+				top: 13px;
+
+				margin: -4px;
+
+				border-radius: 15px;
+				background-color: #eee;
+			}
+
 		#cityZoomSlider {
 			position: absolute;
 
@@ -806,6 +859,17 @@ p {
 				#messageEnlarged h6.subject {
 					text-align: center;
 				}
+
+		#message-close {
+			position: absolute;
+			right: 0;
+			top: -30px;
+		}
+		
+			#message-close img {
+				height: 20px;
+				width: 20px; 
+			}
 
 		#messageScroller {
 			position: absolute;

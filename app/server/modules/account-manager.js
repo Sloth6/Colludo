@@ -16,7 +16,6 @@ var startingArmy = {
 };
 
 
-
 exports.autoLogin = function(user, pass, callback) {
 	db.query('SELECT * FROM users WHERE username = ?', [sanitize(user).xss()], function(err, rows, fields) {
 		if ( (rows.length == 1) && (pass == rows[0].password) ) {
@@ -29,7 +28,7 @@ exports.autoLogin = function(user, pass, callback) {
 }
 
 exports.manualLogin = function(email, pass, callback) {
-  	db.query('SELECT * FROM users WHERE email = ?', [sanitize(email).xss()], function(err, rows, fields) {
+	db.query('SELECT * FROM users WHERE email = ?', [sanitize(email).xss()], function(err, rows, fields) {
 		if (err) return callback(err);
 		if (rows.length == 0) {
 			callback('user-not-found');
@@ -252,6 +251,7 @@ exports.getUserDataById = function(userId, callback) {
 // }
 
 var md5 = function(str) {
+	console.log('md5', str);
 	return crypto.createHash('md5').update(str).digest('hex');
 }
 

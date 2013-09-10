@@ -26,6 +26,8 @@ html
 							a(href='#city') City
 						li#message-link.left-2
 							a(href='#message') Messaging
+							p#new-messages 0
+			div#fader.hidden
 					
 		div#storage
 			div#window_0
@@ -79,8 +81,13 @@ html
 					div#cityPanel
 						canvas#cityCanvas(width='625', height='625')
 						div#cityInfoPane.ui-widget-content.accordion-container
-						//- div#cityName
 						div#cityZoomSlider
+						div#cityJoystick
+							div.up
+							div.left
+							div.right
+							div.down
+							div#joystick
 						div#resourceBar
 							ul
 								li.food 
@@ -142,6 +149,8 @@ html
 								h1 Messages
 							ul#messageList
 							input#composeButton(type='button', value='Compose')
+						div#message-close
+							img(src='http://204.236.234.28:8080/img/closebutton.png')
 
 		script(src='/socket.io/socket.io.js')
 		script(type='text/javascript', src='http://code.jquery.com/jquery-1.9.1.js')
