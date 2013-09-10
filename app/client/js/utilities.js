@@ -30,6 +30,7 @@ function loadImages2(tilePath, imageNames, imageArr, callback) {
 	for (var i = 0; i < imageNames.length; i++) {
     var image = new Image();
     image.src = tilePath+imageNames[i]+'.png';
+    console.log(tilePath+imageNames[i]);
     image.onload = function(){
     	loadedImagesCount++;
     	if (loadedImagesCount >= imageNames.length) {	            
