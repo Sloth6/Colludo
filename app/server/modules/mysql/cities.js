@@ -3,6 +3,7 @@ exports.selectCity = selectCity;
 exports.updateCity = updateCity;
 exports.selectAll = selectAll;
 
+
 var mysql 	= require('mysql');
 var db = mysql.createConnection({
   host     : 'dbinstance.cgmcl2qapsad.us-west-2.rds.amazonaws.com',
@@ -10,58 +11,47 @@ var db = mysql.createConnection({
   password : 'password',
   database : 'colludo',
 });
-var startingCity = 
-	'x, x, x, x, x,  x, x, x, x, x,  x, x, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, x, x,  x, f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, x, x,  f0,f0,f0,f0,f0, f0,t0,t1,t2,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, x, f0, f0,f0,f0,f0,f0, f0,t2,t0,t1,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, x, f0,f0, f0,f0,f0,f0,f0, f0,f0,t1,t0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, x, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  x, r, r, f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, x,  f0,f0,r, f0,f0, t0,t1,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, x, f0, f0,r, r, f0,f0, t1,t2,t0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, x, f0,f0, f0,r, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	'x, x, f0,f0,f0, f0,r, r, r, r,  f0,c, f0,f0,f0, f0,f0,f0,f0,ro, ro,ro,f0,f0,f0,'+
-	'x, t0,f0,f0,f0, f0,f0,f0,f0,r,  f, h, f0,f0,f0, f0,f0,f0,ro,ro, f0,f0,f0,f0,f0,'+
-	't0,t1,f0,f0,f0, f0,f0,f0,f0,r,  f0,f, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
-	't1,t2,t2,t0,f0, f0,f0,f0,f0,r,  f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,'+ 
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,r,  r, r, r, r, f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,'+ 
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,r, r,  f0,f0,f0,f0,f0, f0,f0,x, x, x,'+ 
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,r,  r, r, f0,f0,f0, f0,x, x, x, x,'+ 
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,r, r, f0,f0, x, x, x, x, x,'+ 
-	'f0,f0,f0,f0,ro, ro,ro,ro,f0,f0, f0,f0,f0,f0,f0, f0,f0,r, r, x,  x, x, x, x, x,'+ 
-	'f0,f0,f0,f0,f0, ro,ro,ro,ro,f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,  x, x, x, x, x,'+ 
-	'f0,f0,f0,f0,f0, ro,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,x, x, x,  x, x, x, x, x,'+
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,x, x, x, x,  x, x, x, x, x,'+
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, x, x, x, x, x,  x, x, x, x, x,'+ 
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,  x, x, x, x, x,  x, x, x, x, x,'+ 
-	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,  x, x, x, x, x,  x, x, x, x, x';
+// var startingCity = 
+// 	'x, x, x, x, x,  x, x, x, x, x,  x, x, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  x, x, x, x, x,  x, f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  x, x, x, x, x,  f0,f0,f0,f0,f0, f0,t0,t1,t2,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  x, x, x, x, f0, f0,f0,f0,f0,f0, f0,t2,t0,t1,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  x, x, x, f0,f0, f0,f0,f0,f0,f0, f0,f0,t1,t0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  x, x, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  x, r, r, f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, x,  f0,f0,r, f0,f0, t0,t1,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, x, f0, f0,r, r, f0,f0, t1,t2,t0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, x, f0,f0, f0,r, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	'x, x, f0,f0,f0, f0,r, r, r, r,  f0,c, f0,f0,f0, f0,f0,f0,f0,ro, ro,ro,f0,f0,f0,'+
+// 	'x, t0,f0,f0,f0, f0,f0,f0,f0,r,  f, h, f0,f0,f0, f0,f0,f0,ro,ro, f0,f0,f0,f0,f0,'+
+// 	't0,t1,f0,f0,f0, f0,f0,f0,f0,r,  f0,f, f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0,'+
+// 	't1,t2,t2,t0,f0, f0,f0,f0,f0,r,  f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,'+ 
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,r,  r, r, r, r, f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,'+ 
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,r, r,  f0,f0,f0,f0,f0, f0,f0,x, x, x,'+ 
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,r,  r, r, f0,f0,f0, f0,x, x, x, x,'+ 
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,r, r, f0,f0, x, x, x, x, x,'+ 
+// 	'f0,f0,f0,f0,ro, ro,ro,ro,f0,f0, f0,f0,f0,f0,f0, f0,f0,r, r, x,  x, x, x, x, x,'+ 
+// 	'f0,f0,f0,f0,f0, ro,ro,ro,ro,f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,  x, x, x, x, x,'+ 
+// 	'f0,f0,f0,f0,f0, ro,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,x, x, x,  x, x, x, x, x,'+
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,x, x, x, x,  x, x, x, x, x,'+
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, x, x, x, x, x,  x, x, x, x, x,'+ 
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,f0,x,  x, x, x, x, x,  x, x, x, x, x,'+ 
+// 	'f0,f0,f0,f0,f0, f0,f0,f0,f0,f0, f0,f0,f0,x, x,  x, x, x, x, x,  x, x, x, x, x';
+// startingCity = JSON.stringify(startingCity.replace(/ /g,'').split(','));
 
-startingCity = JSON.stringify(startingCity.replace(/ /g,'').split(','));
-				// if (city.tiles[tileId] >= 0) {
-				// 	if (city.tiles[tileId] == 0){
-				// 		if (Math.floor(Math.random()*12) == 0){
-				// 			tileImg = cityTileImgs[14];
-				// 		} else if (Math.floor(Math.random()*8) == 0) {
-				// 			tileImg = cityTileImgs[15];
-				// 		} else if(Math.floor(Math.random()*2) ==0){
-				// 			tileImg = cityTileImgs[16];
-				// 		}else {
-				// 			tileImg = cityTileImgs[0];
-				// 		}
-				// 		var foo = (tileWidth /4.4)*1.9;  
-				// 		ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 
-				// 	}else {
-function insert(userId, userData, tileId, callback) {
+
+function insert(userId, userData, tileId, cityData, callback) {
 	var userName = userData.user;
+	var now = Math.floor(Date.now()/1000);
+
 	// 3. Create entry in city table with player id.
 	var query = 'INSERT INTO cities(player_id, username, city_data, tileId, name, '+
 			'crop, wood, ore, population, last_update, '+
 			'building_queues) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-	var now = Math.floor(Date.now()/1000);
-	var values = [userId, userName, startingCity, tileId, userName+'\'s City',
-		10000.0, 10000.0, 10000.0, 5, now, '[]'];
+
+	var values = [userId, userName, JSON.stringify(cityData), tileId, userName+'\'s City', 10000.0, 10000.0, 10000.0, 5, now, '[]'];
+
 	db.query(query, values, function(err, rows) {
 		if (err) return callback(err);
 		callback(null, rows.insertId);

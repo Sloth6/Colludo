@@ -167,10 +167,7 @@ html
 
 		script(type='text/javascript', src='/js/threejs/tween.js')
 
-		script(type='text/javascript', src='/js/onLoad.js')
-
-		script(type='text/javascript', src='/js/modals/city.js')
-		script(type='text/javascript', src='/js/modals/world.js')
+		script(type='text/javascript', src='/js/serverConfig.js')
 
 		script(type='text/javascript', src='/js/views/cityCanvas.js')
 		script(type='text/javascript', src='/js/views/cityInfo.js')
@@ -178,15 +175,26 @@ html
 		script(type='text/javascript', src='/js/views/worldCanvas.js')
 		script(type='text/javascript', src='/js/views/worldInfo.js')
 
-		script(type='text/javascript', src='/js/controllers/cityCanvas-controller.js')
+
+		
+		script(type='text/javascript', src='/js/utilities.js')
+		script(type='text/javascript', src='/js/classes/world/army.js')
+		script(type='text/javascript', src='/js/classes/world/world.js')
+
+		script(type='text/javascript', src='/js/classes/player.js')
+
+		script(type='text/javascript', src='/js/classes/city/city.js')
+		
+		
+		script(type='text/javascript', src='/js/controllers/selection-controller.js')
 		script(type='text/javascript', src='/js/controllers/cityInfo-controller.js')
 		script(type='text/javascript', src='/js/controllers/message-controller.js')
 		script(type='text/javascript', src='/js/controllers/worldCanvas-controller.js')
 		script(type='text/javascript', src='/js/controllers/worldInfo-controller.js')
 		script(type='text/javascript', src='/js/controllers/navbar-controller.js')
+		script(type='text/javascript', src='/js/controllers/cityInput-controller.js')
 
-		script(type='text/javascript', src='/js/classes/world/army.js')
-
+		script(type='text/javascript', src='/js/onLoad.js')
 
 		script(type='text/javascript', src='/js/sockets/city-listeners.js')
 		script(type='text/javascript', src='/js/sockets/city-requests.js')
@@ -196,4 +204,6 @@ html
 		script(type='text/javascript', src='/js/sockets/world-requests.js')
 		script(type='text/javascript', src='/js/sockets/onLoad-requests.js')
 		script(type='text/javascript', src='/js/sockets/onLoad-listeners.js')
+
+
 

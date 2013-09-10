@@ -2,7 +2,8 @@
 var RM 		= require('./army-manager.js')
   , fs 		= require('fs')
   , citiesTable = require('./mysql/cities.js')
-  , assert 	= require('assert');
+  , assert 	= require('assert')
+  , util = require('./utilities.js');
 
 var db = require('./db.js');
 
@@ -34,9 +35,7 @@ var tilePrices = {
 	// city editing.
 	'field'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'rocks'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees0'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees1'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees2'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'river'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 };
 
@@ -55,9 +54,7 @@ var tileIncomes = {
 
 	'field'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'rocks'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees0'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees1'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees2'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 	'river'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 };
 
@@ -82,36 +79,38 @@ var buildTimes = {
 	'river'		:	0,
 }
 
-var encode = {
-	'field'		: 'f0',
-	'river0'	: 'r0',
-	'trees0' 	: 't0',
-	'trees1' 	: 't1',
-	'trees2' 	: 't2',
-	'rocks'		: 'ro',
-	'sawmill'	: 'sm',
-	'mine'		: 'm',
-	'house'		: 'h',
-	'farm'      : 'f',
-	'capital'	: 'c',
-	'barracks'	: 'b',
-	'stable'	: 'st',
-	'warehouse'	: 'w',
-	'cranny'	: 'cr',
-	'tavern'	: 'ta',
-	'void'		: 'x',
-};
+function Tile(i,t) {
+	console.log('Contructing tile,', t);
+	this.type = decode[t] || 'void';
+	this.id = i;
+	this.image = 0;
+	this.level = 0;
+	this.resources = {crop: 0, wood: 0, ore: 0};
+
+	switch(this.type) {
+		case 'trees':
+			this.image = Math.floor(Math.random()*3);
+			this.resources.wood = 1000;
+			break;
+		case 'rocks':
+			this.resources.ore = 1000;
+			break;
+		case 'field':
+			this.image = Math.floor(Math.random()*3);
+			break;
+	}
+}
+
 var decode = {
+	'f' : 'field',
 	'f0' : 'field',
 	'r' : 'river',
-	't0' : 'trees0',
-	't1' : 'trees1',
-	't2' : 'trees2',
-	'ro' : 'rocks',
+	't' : 'trees',
+	'o' : 'rocks',
 	'sm' : 'sawmill',
 	'm' : 'mine'	,
 	'h' : 'house'	,
-	'f' : 'farm'     ,
+	'a' : 'farm'     ,
 	'c' : 'capital',
 	'b' : 'barracks',
 	'st' : 'stable',
@@ -248,8 +247,37 @@ function getCityData (cityId, session, callback) {
 	City Economy - All economically relevant data
 */
 ////////////////////////////////////////////////////////////////////////////////
+
+var startingTiles=
+	('x,x,x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,t,t,t,f,f,f,f,f,f,'+
+	'x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,t,t,t,f,f,f,f,f,f,'+
+	'x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,t,t,f,f,f,f,f,f,'+
+	'x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,x,x,x,x,r,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,x,x,x,f,f,r,f,f,t,t,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,x,x,f,f,r,r,f,f,t,t,t,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,x,f,f,f,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	'x,x,f,f,f,f,r,r,r,r,f,c,f,f,f,f,f,f,f,o,o,o,f,f,f,'+
+	'x,t,f,f,f,f,f,f,f,r,f,h,f,f,f,f,f,f,o,o,f,f,f,f,f,'+
+	't,t,f,f,f,f,f,f,f,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
+	't,t,t,t,f,f,f,f,f,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,x,'+
+	'f,f,f,f,f,f,f,f,f,r,r,r,r,r,f,f,f,f,f,f,f,f,f,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,r,r,f,f,f,f,f,f,f,x,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,f,r,r,r,f,f,f,f,x,x,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,r,r,f,f,x,x,x,x,x,'+
+	'f,f,f,f,o,o,o,o,f,f,f,f,f,f,f,f,f,r,r,x,x,x,x,x,x,'+
+	'f,f,f,f,f,o,o,o,o,f,f,f,f,f,f,f,f,f,x,x,x,x,x,x,x,'+
+	'f,f,f,f,f,o,f,f,f,f,f,f,f,f,f,f,f,x,x,x,x,x,x,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,x,x,x,x,x,x,x,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,x,x,x,x,x,x,x,x,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,f,x,x,x,x,x,x,x,x,x,x,x,'+
+	'f,f,f,f,f,f,f,f,f,f,f,f,f,x,x,x,x,x,x,x,x,x,x,x,x').split(',');
+
 function createCity(world, userId, userData, tileId, callback) {
-	citiesTable.insert(userId, userData, tileId, function(err, cityId) {
+	var city = generateTiles(startingTiles);
+	citiesTable.insert(userId, userData, tileId, city, function(err, cityId) {
 		if (err) return callback(err);
 		citiesTable.selectCity(cityId, function(err, city){
 			if (err) return callback(err);
@@ -259,7 +287,13 @@ function createCity(world, userId, userData, tileId, callback) {
 			callback(null, city);
 		});
 	});
-	
+	function generateTiles(tiles) {
+		var city = [];
+		for (var i = 0; i < tiles.length; i++) {
+			city.push(new Tile(i, tiles[i]));
+		}
+		return city;
+	}
 }
 
 
@@ -293,7 +327,7 @@ function getTilesWithinRadiusOf( tileId, radius ) {
 function arrayContains( cityTiles, tileArray, tileTypeString ) {
 	var count = 0;
 	for (var i = 0; i < tileArray.length; i++) {
-		if ( decode[ cityTiles[ tileArray[i] ] ] === tileTypeString ) {
+		if (cityTiles[tileArray[i]].type === tileTypeString ) {
 			count++;
 		}
 	}
@@ -323,7 +357,7 @@ function getTileBonuses( cityTiles, tileId, tileTypeString ) {
 	{
 		var neighborCount = 0;
 		for (var i = 0; i < neighbors.length; i++) {
-			if ( decode[ cityTiles[ neighbors[i] ] ] === tileTypeString ) {
+			if (cityTiles[neighbors[i]].type === tileTypeString ) {
 				neighborCount ++;
 			}
 		}
@@ -334,8 +368,8 @@ function getTileBonuses( cityTiles, tileId, tileTypeString ) {
 	return bonuses;
 }
 
-function getTileEconomy( cityTiles, tileType, tileId ) {
-	// console.log( 'TILE '+tileId+' - '+decode[tileType] );
+function getTileEconomy( cityTiles, tileId ) {
+	var tile = cityTiles[tileId];
 	var tileEconomy = {
 		'crop' : 0,
 		'wood' : 0,
@@ -345,34 +379,28 @@ function getTileEconomy( cityTiles, tileType, tileId ) {
 		'storage' : 0,
 		'hidden'  : 0,
 	};
-	// if ( tileType >= 14 || tileType < 0 ) return tileEconomy;
-	if ( tileType === 'x' || tileType === 'r') return tileEconomy;
-	var tileTypeString = decode[ tileType ];
-
-	var bonuses = getTileBonuses( cityTiles, tileId, tileTypeString );
+	if (tile.type === 'void' || tile.type === 'river') return tileEconomy;
+	var bonuses = getTileBonuses( cityTiles, tileId, tile.type );
 	var bonus = bonuses.quality * bonuses.efficiency * bonuses.happiness;
-	// tileEconomy.bonus = bonus;
-	console.log(tileType, tileTypeString);
-	tileEconomy.crop = Math.floor( bonus*tileIncomes[ tileTypeString ].crop );
-	tileEconomy.wood = Math.floor( bonus*tileIncomes[ tileTypeString ].wood );
-	tileEconomy.ore  = Math.floor( bonus*tileIncomes[ tileTypeString ].ore );
 
-	if (tileTypeString === 'house') {
+	tileEconomy.crop = Math.floor( bonus*tileIncomes[ tile.type ].crop );
+	tileEconomy.wood = Math.floor( bonus*tileIncomes[ tile.type ].wood );
+	tileEconomy.ore  = Math.floor( bonus*tileIncomes[ tile.type ].ore );
+
+	if (tile.type === 'house') {
 		tileEconomy.workers    = 5;
 		tileEconomy.population = 5;
-	} else if (tileTypeString === 'capital') {
+	} else if (tile.type === 'capital') {
 		tileEconomy.storage = 1000;
+		tileEconomy.hidden  = 0;
 		tileEconomy.workers    = 2;
 		tileEconomy.population = 3;
-	} else if (tileTypeString === 'warehouse') {
+	} else if (tile.type === 'warehouse') {
 		tileEconomy.storage = 1000;
 		tileEconomy.hidden  = 0;
-	} else if (tileTypeString === 'cranny') {
+	} else if (tile.type === 'cranny') {
 		tileEconomy.storage = 200;
-		tileEconomy.hidden  = 200;
-	} else if (tileTypeString === 'capital') {
-		tileEconomy.storage = 500;
-		tileEconomy.hidden  = 0;
+		tileEconomy.hidden  = 200;	
 	} else {
 		tileEconomy.storage = 0;
 		tileEconomy.hidden  = 0;
@@ -399,23 +427,20 @@ function getCityEconomy(city) {
 	};
 	var tileEconomy, stat;
 	for (var i = 0; i < city.tiles.length; i++) {
-		tileEconomy = getTileEconomy( city.tiles, city.tiles[i], i );
+		tileEconomy = getTileEconomy( city.tiles, i );
 
 		for (stat in cityEconomy) {
 			cityEconomy[stat] += tileEconomy[stat];
 		}
 	}
-	// for (var j = 0; j < decode.length; j++) {
-	// 	console.log( decode[j] + ' - ' +
-	// 		getNumberOfTiles( city.tiles, decode[j]) );
-	// }
+
 	return cityEconomy;
 }
 
 function getNumberOfTiles(tiles, tileTypeString) {
 	var count = 0;
 	for (var i = 0; i < tiles.length; i++) {
-		if (decode[ tiles[i] ] === tileTypeString) count++;
+		if (tiles[i].type === tileTypeString) count++;
 	}
 	return count;
 }
@@ -455,7 +480,8 @@ function updateCity(city, callback) {
 
 			// update the city tiles
 			for (var j = 0; j < tileIds.length; j++) {
-				city.tiles[tileIds[j]] = encode[tileType];
+				city.tiles[tileIds[j]].type = tileType;
+				city.tiles[tileIds[j]].image = 0;
 			}
 
 			// the finishTime of this order is now the time of the lastUpdate
@@ -530,19 +556,21 @@ function buildTiles(sio, username, cityId, tileType, tiles) {
 
 // data : {'tileType', 'tiles', 'cityId'}
 function orderTiles(sio, session, data, callback) {
-	// console.log('ORDER: check 1', data);
 	var oldTileType;
 	var numTiles = data.tiles.length;
 	var now = Math.floor(Date.now()/1000);
 	var tileType = data.tileType;
 	var finishTime = now + buildTimes[tileType];
-	if (session.user.cities.indexOf(data.cityId) < 0) {
+
+	if (!data || !data.tiles || !data.cityId) {
+		return(console.log("invalid input! @ orderTiles", data));
+	} else if (session.user.cities.indexOf(data.cityId) < 0) {
 		console.log('trying to build on a wrong city!');
 		callback('invalid-cityID');
 	} else {
 		exports.getCityData(data.cityId, session, function(err, cityData) {
 			// console.log('ORDER: check 2', cityData);
-			oldTileType = decode[cityData.tiles[data.tiles[0]]];
+			oldTileType = cityData.tiles[data.tiles[0]].type;
 			// check we have enough resources. 
 			if (!canAffordBuildings(oldTileType, tileType, data.tiles.length, cityData)) {
 				callback('not enough resources!, poor n00b');

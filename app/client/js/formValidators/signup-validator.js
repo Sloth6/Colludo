@@ -1,3 +1,4 @@
+
 ////////////////////////////////////////////////////////////////////////////////
 /*
 	signup-validator.js
@@ -88,7 +89,7 @@ function passwordsSU(form) {
 function register(form, user, email, pass) {
     // var jstring = JSON.stringify([username, email, password]);
     $.ajax({
-	    url:      'http://204.236.234.28:8080/signup',
+	    url:      SERVER+'/signup',
 		dataType: 'text',
 		type:     'post',
 		data:     {'user' : user, 'email' : email, 'pass' : pass},

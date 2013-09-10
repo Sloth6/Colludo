@@ -1,4 +1,5 @@
 var tileWidth = 40;
+var NUM_TILES = 25;
 
 var cityView = {
 	x : NUM_TILES * tileWidth/2,
@@ -12,17 +13,6 @@ var cityView = {
 */
 ///////////////////////////////////////////////////////////////////////////////
 
-var buildingImage = new Image();
-buildingImage.src = cityTilePath+'building.png';
-
-var selectedImg = new Image();
-selectedImg.src = cityTilePath+'selected.png';
-
-var cityBackgroundImg = new Image();
-cityBackgroundImg.src = cityTilePath+'cityBackground.png';
-
-var gradientImg = new Image();
-gradientImg.src = cityTilePath+'AtmosphericGradient.png';
 
 function worldXY(id) {
 	var tileHeight = tileWidth/2
@@ -53,6 +43,12 @@ function drawSquareAt(id,  w, h) {
 }
 
 function drawFoo(tileA, tileB) {
+	console.log(tileA, tileB);
+	tileA.row = Math.floor(tileA.id/25);
+	tileB.row = Math.floor(tileB.id/25);
+	tileA.col = (tileA.id%25);
+	tileB.col = (tileB.id%25);
+	
 	var start = {'row' : Math.min(tileA.row, tileB.row), 'col' : Math.min(tileA.col, tileB.col)};
 	var end = {'row' : Math.max(tileA.row, tileB.row), 'col' : Math.max(tileA.col, tileB.col)};
 	var id;
@@ -61,7 +57,8 @@ function drawFoo(tileA, tileB) {
 		for (var col = start.col; col <= end.col; col++) {
 			// the id of the current tile. 
 			id = row*NUM_TILES + col;
-			if (city.tiles[id] == selectingType) drawSquareAt(id);
+			if (city.tiles[id].type === selectionContr.lastTile.type) 
+				drawSquareAt(id);
 		}
 	}
 }
@@ -96,17 +93,35 @@ function drawRivers(ctx, width, height) {
 	}
 }
 
+function windowCity(can) {
+	// console.log(can.width, can.height);
+	tileHeight = (can.height / NUM_TILES);
+	tileWidth = tileHeight*2;
+	cityView.y = can.height/2;
+	cityView.x = can.width/2 + (6 * tileWidth);
+	// console.log('windowed view',cityView.x, cityView.y);
+}
+
+function windowCity2(can) {
+	// console.log(can.width, can.height);
+	tileHeight = (can.height / NUM_TILES);
+	tileWidth = tileHeight*2;
+	cityView.y = tileHeight * NUM_TILES/2;
+	cityView.x = 6 * tileWidth;//tileWidth;//cityView.y * Math.sqrt(3) /4;
+	// console.log('windowed view',cityView.x, cityView.y);
+	// $('#cityZoomSlider').slider('value', tileWidth.toString());//tileWidth;//cityView.y * Math.sqrt(3) /4;
+
+}
 
 var buffer;
 var bufferCtx;
 var first = true; 
 function drawMap() {
-	// console.log('drawMap');
 	if(!city || city.tiles=={} || !haveCityImages){
 		console.log('too soon! try back later.', haveCityImages);
 		//too soon! try back later. 
 		setTimeout(function(){
-			// drawResources();
+			drawRivers(cityCtx, width, height);
 			drawMap();
 		}, 100);
 		return;
@@ -118,13 +133,14 @@ function drawMap() {
 		  , imageW = 13 * tileWidth;
 
 		cityCtx.clearRect(0, 0, width, height);
+		drawRivers(cityCtx, width, height);
 		cityCtx.drawImage(buffer,
 			-(cityView.x - width/2),
 			-(cityView.y - height/2),
 			imageW,
 			imageH
 		);
-		drawRivers(cityCtx, width, height);
+		
 
 	} else {
 		var oldTileWidth = tileWidth;
@@ -157,31 +173,38 @@ function drawMap() {
 
 //Draw the array of tiles. 
 function drawMap2(ctx, width, height) {
-	console.log('drawMap2');
+	var city = player.getCurrentCity();
+	var tileHeight = Math.floor(tileWidth/2);//height/(NUM_TILES+1)
+	var tileId;
+	var tileImg;
+	var tile;
 	ctx.clearRect(0,0, width, height);
-	var tileHeight = Math.floor(tileWidth/2)//height/(NUM_TILES+1)
-	  , tileId
-	  , tileImg
-	  , tileType;
 
-	ctx.drawImage(cityBackgroundImg,
-		screenXY(12, width, height).x, 
-		screenXY(12, width, height).y + tileHeight/2,
-		(NUM_TILES-12) * tileWidth,
-		(12) * tileHeight
-	);	
+	// ctx.drawImage(cityBackgroundImg,
+	// 	screenXY(12, width, height).x, 
+	// 	screenXY(12, width, height).y + tileHeight/2,
+	// 	(NUM_TILES-12) * tileWidth,
+	// 	(12) * tileHeight
+	// );	
 	var foo = (tileWidth /4.4)*1.9; 
 	for (var row = 0; row < NUM_TILES; row++) {
 		for (var col = NUM_TILES-1; col >=0 ; col--) {
 			tileId = row * NUM_TILES + col;
-			tileType = decode[city.tiles[tileId]];
-							screenCoords = screenXY(tileId, width, height);
-				ctx.drawImage(cityTileImgs['field'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
+			tile = city.tiles[tileId];
+			screenCoords = screenXY(tileId, width, height);
+			if (tile.type !== 'river')ctx.drawImage(cityTileImgs['field0'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 
-			if (tileType !== 'void' && tileType !== 'river' && tileType !== 'field') {
+			if (tile.type !== 'void' && tile.type !== 'river' && tile.type !== 'field') {
+				// console.log(tile.type, cityTileImgs);
 
-				tileImg = cityTileImgs[tileType];
-				ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
+				tileImg = cityTileImgs[tile.type + tile.image];
+				// console.log(tile.type + tile.image, tileImg);
+				try{
+					ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
+				} 
+				catch(err){
+					console.log(err, tileImg, tile.type + tile.image);
+				}
 			}
 		};
 	};
@@ -216,11 +239,4 @@ function drawResources() {
 	var pop = city.population;
 	$('.population span').text(work+'/'+pop);
 	setPopulationInfo(work, pop);
-}
-function drawSelected() {
-	for (var i = 0; i < selected.length; i++) {
-		if(selected[i] || selected[i] == 0){
-			drawSquareAt(selected[i]);
-		}
-	};
 }

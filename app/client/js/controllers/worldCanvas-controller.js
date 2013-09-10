@@ -294,17 +294,19 @@ function animate() {
 var cX = 0;
 function update() {
 	// console.log(c);
+	if(cityCanvas){
 	if(cX % 100 == 0) {
 		ri = [];
 		cX = 0;
 		drawRivers(cityCtx, cityCanvas.width, cityCanvas.height);
-		// drawMap();
-		// drawSelected();
+		drawMap();
+		selectionContr.drawSelected();
 		// drawFoo()
 	}
 	cX++;
+}
 	// console.log(getCurrentPanel());
-	if (getCurrentPanel() == 'world') {
+	if (getCurrentPanel() === 'world') {
 		if ( keyboard.pressed("W"))
 			view.z -=3 ;
 
@@ -342,22 +344,22 @@ function update() {
 		if ( keyboard.pressed("W")) {
 			cityView.y-=delt;
 			drawMap();
-			drawSelected();
+			selectionContr.drawSelected();
 		}
 		if ( keyboard.pressed("S")) {
 			cityView.y+=delt;
 			drawMap();
-			drawSelected();
+			selectionContr.drawSelected();
 		}
 		if ( keyboard.pressed("A")) {
 			cityView.x-=delt;
 			drawMap();
-			drawSelected();
+			selectionContr.drawSelected();
 		}
 		if ( keyboard.pressed("D")) {
 			cityView.x+=delt;
 			drawMap();
-			drawSelected();
+			selectionContr.drawSelected();
 		}
 	}
 	stats.update();

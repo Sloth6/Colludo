@@ -1,16 +1,12 @@
-// var socket = io.connect('http://204.236.234.28:8080');
-var socket = io.connect('http://localhost:8080');
 
-
+/*
+* Globals
+*/
+var socket = io.connect(SERVER);
 var player;
-// {
-// 	'cities'
-//  'armies'
-// 	'name'
-// 	'readMsgs'
-// 	'unreadMsgs'
-// };
-
+var selectionContr;
+var city;
+var cityInputContr;
 
 var cityCanvas
   , cityCtx
@@ -23,31 +19,49 @@ var cityCanvas
 			 'playerArmy.png', 'battle.png', 'hexSelected.png', 'enemyArmy.png']
   , mapTiles = [];//Image objects array.
 
-
 var cityTilePath = '/img/cityTiles/';
 var cityTileNames = [
-	'field', 
+	'field0', 
 	'river0', 'river1', 'river2',
-	'Trees0','Trees1','Trees2',
-	'rocks', 'sawmill',
-	'mine', 'house', 'farm', 'capital', 'barracks',
-	'stable', 'warehouse', 'cranny', 'tavern'];
-
+	'trees0','trees1','trees2',
+	'rocks0', 'sawmill0',
+	'mine0', 'house0', 'farm0', 'capital0', 'barracks0',
+	'stable0', 'warehouse0', 'cranny0', 'tavern0'];
 var cityTileImgs = {};//Image objects array.
 
+var buildingImage = new Image();
+buildingImage.src = cityTilePath+'building.png';
 
-loadImages(mapTilePath, mapTileNames, mapTiles, function(){
-	haveImages = true;
-});
-var haveCityImages = false;
-loadImages2(cityTilePath, cityTileNames, cityTileImgs, function(){
-	haveCityImages = true;
-});
-	
+var selectedImg = new Image();
+selectedImg.src = cityTilePath+'selected.png';
+
+var cityBackgroundImg = new Image();
+cityBackgroundImg.src = cityTilePath+'cityBackground.png';
+
+var gradientImg = new Image();
+gradientImg.src = cityTilePath+'AtmosphericGradient.png';
+
+	var haveCityImages = false;
+
 $(document).ready(function() {
 	'use strict';
+	selectionContr = new SelectionController();
+	cityInputContr = new CityInputController();
+
+	loadImages(mapTilePath, mapTileNames, mapTiles, function(){
+		haveImages = true;
+	});
+
+	loadImages2(cityTilePath, cityTileNames, cityTileImgs, function(){
+		haveCityImages = true;
+	});
+
+	bindMouse(cityInputContr);
+	// var cityInputHandler new CityInputHandler();
+
 	cityCanvas = document.getElementById("cityCanvas");
 	cityCtx = cityCanvas.getContext("2d");
+
 
 	var mapWidth =  parseInt($('#view').css('width').slice(0, -2));
 	var mapHeight = parseInt($('#view').css('height').slice(0, -2));
@@ -65,13 +79,6 @@ $(document).ready(function() {
 		collapsible: true,
 		heightStyle: 'content'
 	});
-
-	bindMouse();
-	cityBindInput();
-	cityBindUI();
-
-	worldBindInput();
-
 	onLoadRequests();
 
 	$(window).on('resize', function() {
@@ -83,72 +90,68 @@ $(document).ready(function() {
 	});
 });
 
-// name that panel!
-function getCurrentPanel() {
-	var active = $('li.active')[0];
-	if(active)
-		return active.id.split('-')[0];
-}
 
-function loadImages(tilePath, imageNames, imageArr, callback) {
-	var loadedImagesCount = 0;
-	for (var i = 0; i < imageNames.length; i++) {
-	    var image = new Image();
-	    image.src = tilePath+imageNames[i];
-	    image.onload = function(){
-	        loadedImagesCount++;
-	        if (loadedImagesCount >= imageNames.length) {	            
-				//Get update the player model with server info.
-				callback();
-	        }
-	    }
-	    imageArr.push(image);
-	}
-}
-function loadImages2(tilePath, imageNames, imageArr, callback) {
-	var loadedImagesCount = 0;
-	for (var i = 0; i < imageNames.length; i++) {
-    var image = new Image();
-    image.src = tilePath+imageNames[i]+'.png';
-    image.onload = function(){
-    	loadedImagesCount++;
-    	if (loadedImagesCount >= imageNames.length) {	            
-				//Get update the player model with server info.
-				callback();
-       }
-    }
-    imageArr[imageNames[i]] = image;
-	}
-}
+function bindMouse(cityInput){
+	// var DOMId = e.target.id;
 
-function bindMouse(){
-	$(document).keydown(function(e){
-		(getCurrentPanel() == 'city') ? cityKeyDown(e) : worldKeyDown(e);
-	});
 	$(document).mousedown(function(e){
-		var DOMId = e.target.id;
-		if ((getCurrentPanel() == 'city')
-			&&(e.target.id == 'cityCanvas' || DOMId == 'navbar-container')) {
-			cityMouseDown(e);
-		} else if (e.target.id == '') {
-			worldMouseDown(e);
-		} else {
-			// Do nothing, button handlers will take care of it. 
+		// console.log(getCurrentPanel(), e.target.id);
+		// return;
+		switch(getCurrentPanel()) {
+			case 'city':
+				if (e.target.id == 'cityCanvas')cityInput.mouseDown(e);
+				break;
+			case 'world':
+				break;
+		}
+	});
+
+
+		// if ((getCurrentPanel() == 'city')
+		// 	&&(e.target.id == 'cityCanvas' || DOMId == 'navbar-container')) {
+		// 	cityMouseDown(e);
+		// } else if (e.target.id == '') {
+		// 	worldMouseDown(e);
+		// } else {
+		// 	// Do nothing, button handlers will take care of it. 
+		// }
+
+	$(document).keydown(function(e){
+		switch(getCurrentPanel()) {
+			case 'city':
+				cityInput.keyDown(e);
+				break;
+			case 'world':
+				break;
 		}
 	});
 	$(document).mouseup(function(e){
-		var DOMId = e.target.id;
-		if ((getCurrentPanel() == 'city')
-			&&(e.target.id == 'cityCanvas' || DOMId == 'navbar-container')) {
-			cityMouseUp(e);
-		} else if (e.target.id == 'worldCanvas') {
-			worldMouseUp(e);
-		} else {
-			// Do nothing, button handlers will take care of it. 
+		switch(getCurrentPanel()) {
+			case 'city':
+				cityInput.mouseUp(e);
+				break;
+			case 'world':
+				break;
 		}
+		// var DOMId = e.target.id;
+		// if ((getCurrentPanel() == 'city')
+		// 	&&(e.target.id == 'cityCanvas' || DOMId == 'navbar-container')) {
+		// 	cityMouseUp(e);
+		// } else if (e.target.id == 'worldCanvas') {
+		// 	worldMouseUp(e);
+		// } else {
+		// 	// Do nothing, button handlers will take care of it. 
+		// }
 	});
 	$(document).mousemove(function(e){
-	 	(getCurrentPanel() == 'city') ? cityMouseMove(e) : worldMouseMove(e);
+		switch(getCurrentPanel()) {
+			case 'city':
+				cityInput.mouseMove(e);
+				break;
+			case 'world':
+				break;
+		}
+	 	// (getCurrentPanel() == 'city') ? cityMouseMove(e) : worldMouseMove(e);
 	});
 	// $('#cityCanvas').mousewheel(function(e) {
 	// 	(getCurrentPanel() == 'city') ? cityWheel(e) : worldWheel(e);
@@ -159,42 +162,42 @@ function bindMouse(){
 	    window.addEventListener('DOMMouseScroll', wheel, false);
 	}
 	window.onmousewheel = document.onmousewheel = wheel;
-
-
-	// // IE9, Chrome, Safari, Opera
-	// $('#cityCanvas').bind('mousewheel', wheel);
-
-	// Firefox
-	// $('#cityCanvas').bind('DOMMouseScroll', cityWheel);
-
-	// $('#worldCanvas').bind('mousewheel', worldWheel);
-
 }
-function wheel(e) {
-	var delta;
-	var element = (e.srcElement) ? e.srcElement.id : e.originalTarget.id;
-	
-	if (e.wheelDelta) {  /* Chrome/IE/Opera. */
-		delta = e.wheelDelta/120;
-	} else if (e.detail) {
-		delta = -e.detail/3;
-	}
-	
-	if (element == 'cityCanvas') {
-		preventDefault(e);
-		cityWheel(delta);
-	} else if (element == 'worldCanvas') {
-		preventDefault(e);
-		worldWheel(delta);
-	}
-}
-
 function preventDefault(e) {
 	e = e || window.event;
 	if (e.preventDefault)
 	  e.preventDefault();
 	e.returnValue = false; 
 }
+var wheel = function(e) {
+	var delta;
+	if (e.wheelDelta) {  /* Chrome/IE/Opera. */
+		delta = e.wheelDelta/120;
+	} else if (e.detail) {
+		delta = -e.detail/3;
+	}
+	switch(getCurrentPanel()) {
+			case 'city':
+				cityInputContr.wheel(delta);
+				break;
+			case 'world':
+				break;
+		}
+
+	// var element = (e.srcElement) ? e.srcElement.id : e.originalTarget.id;
+	
+	
+	
+	// if (element == 'cityCanvas') {
+	// 	preventDefault(e);
+	// 	cityWheel(delta);
+	// } else if (element == 'worldCanvas') {
+	// 	preventDefault(e);
+	// 	worldWheel(delta);
+	// }
+}
+
+
 
 function cityBindInput(){
 	//  No buttons yet. 
@@ -208,7 +211,7 @@ function worldBindInput() {
 	var zOutButton= document.getElementById("zoomOut");
 	var showCoordsButton = document.getElementById("showCoords");
 	var moveArmyButton = document.getElementById('moveArmy');
-	var attackButton = document.getElementById('attack');
+
 	//Map the button being clicked to function handlers. 
 	// zInButton.onclick = function(){worldWheel(-5)};
 	// zOutButton.onclick= function(){worldWheel(5)};
@@ -216,6 +219,5 @@ function worldBindInput() {
 		showCords = !showCords;
 		draw_hex_field();
 	};
-	moveArmyButton.onclick = function(){world.toggleMovingArmy();};
-	attackButton.onclick = function(){alert('Implement me!');};
+	moveArmyButton.onclick = toggleMovingArmy;
 }
