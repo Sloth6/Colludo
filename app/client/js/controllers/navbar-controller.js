@@ -91,7 +91,7 @@ function validSlidePanel(toId) {
 $('ul.nav li').on('click', function(event) {
 	event.preventDefault();
 	if (this.id == 'logout') {
-		window.location = SERVER + 'logout';
+		window.location = SERVER + '/logout';
 	}
 
 	if (!validSlidePanel(this.id)) return;
