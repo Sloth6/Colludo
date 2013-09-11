@@ -7,8 +7,7 @@ socket.on('resourcePush', function(data) {
 
 // data :  {'tileType' : tileType, 'tiles' : tiles}
 socket.on('builtTiles', function(data){
-	// console.log('got build alert',data);
-	city.build(data.tileType, data.tiles);
+	city.build(data.tileType, data.tiles, data.images);
 });
 
 socket.on('contractEvent', function(data){

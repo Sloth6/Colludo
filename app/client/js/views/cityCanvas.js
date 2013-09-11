@@ -192,9 +192,10 @@ function drawMap2(ctx, width, height) {
 			tileId = row * NUM_TILES + col;
 			tile = city.tiles[tileId];
 			screenCoords = screenXY(tileId, width, height);
-			if (tile.type !== 'river')ctx.drawImage(cityTileImgs['field0'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
-
-			if (tile.type !== 'void' && tile.type !== 'river' && tile.type !== 'field') {
+			if (tile.type !== 'river' && tile.type !== 'field'){
+				ctx.drawImage(cityTileImgs['field0'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
+			}
+			if (tile.type !== 'void' && tile.type !== 'river') {
 				// console.log(tile.type, cityTileImgs);
 
 				tileImg = cityTileImgs[tile.type + tile.image];

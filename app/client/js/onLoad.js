@@ -21,11 +21,16 @@ var cityCanvas
 
 var cityTilePath = '/img/cityTiles/';
 var cityTileNames = [
-	'field0', 
+	'field0', 'field1', 'field2', 'field3', 
 	'river0', 'river1', 'river2',
 	'trees0','trees1','trees2',
-	'rocks0', 'sawmill0',
-	'mine0', 'house0', 'farm0', 'capital0', 'barracks0',
+
+	'rocks0', 'rocks1',
+	'mine0', 'mine1',
+	'sawmill0','sawmill1',
+	'house0','house1',
+	'farm0', 
+	'capital0', 'barracks0',
 	'stable0', 'warehouse0', 'cranny0', 'tavern0'];
 var cityTileImgs = {};//Image objects array.
 

@@ -58,7 +58,7 @@ SelectionController.prototype.addToSelected = function(a,b) {
 //Take this tile and add it to the selected array and draw a yellow square
 //Around it showing that it is selected. 
 SelectionController.prototype.select = function(tile) {
-	assert(!!tile, tile);
+	console.log(tile);
 	if (tile.id >= 25*25 || tile.id < 0) return;
 	var self = this;
 	var index = self.selected.indexOf(tile.id);

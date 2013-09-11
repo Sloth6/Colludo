@@ -122,7 +122,8 @@ City.prototype.buy = function(oldType, newType) {
 
 // This function is called once the server tells the client it is time to build. 
 // The server has already made these changes. 
-City.prototype.build = function(tileType, tiles) {
+City.prototype.build = function(tileType, tiles, imgs) {
+	assert(tiles.length == imgs.length);
 	// update incomes
 	buffer = null;
 	console.log('buildTiles: ', this.resources);
@@ -134,11 +135,11 @@ City.prototype.build = function(tileType, tiles) {
 
 
 	}
-	console.log(this.income);
-	while (tiles.length > 0) {
-		e = tiles.pop();
-		this.tiles[e].type = tileType;
-		this.image = 0;
+	var tile;
+	for (var i = 0; i < tiles.length; i++) {
+		tile = this.tiles[tiles[i]];
+		tile.type = tileType;
+		tile.image = imgs[i];
 		if (tileType == 'warehouse') {
 			this.capacity.storage += 500;
 		}; 

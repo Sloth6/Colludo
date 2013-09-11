@@ -59,46 +59,60 @@ var tileIncomes = {
 };
 
 var buildTimes = {
-	'farm'      :	5,
-	'mine' 		: 	5,
-	'sawmill'   :	5,
+	'farm'      :	1,
+	'mine' 		: 	1,
+	'sawmill'   :	1,
 	
-	'house' 	:	5,
-	'barracks'	:	5,
-	'stable'    :   5,
-	'capital'	:	5,
-	'warehouse'	:	5,
-	'cranny'	:	5,
-	'tavern'	:	5,
+	'house' 	:	1,
+	'barracks'	:	1,
+	'stable'    :   1,
+	'capital'	:	1,
+	'warehouse'	:	1,
+	'cranny'	:	1,
+	'tavern'	:	1,
 
 	'field'		:	0,
 	'rocks'		:	0,
-	'trees0'		:	0,
-	'trees1'		:	0,
-	'trees2'		:	0,
+	'trees'		:	0,
 	'river'		:	0,
 }
+var numImages = {
+	'farm'      :	1,
+	'mine' 		: 	2,
+	'sawmill'   :	2,
+	
+	'house' 	:	2,
+	'barracks'	:	1,
+	'stable'    :   1,
+	'capital'	:	1,
+	'warehouse'	:	1,
+	'cranny'	:	1,
+	'tavern'	:	1,
 
-function Tile(i,t) {
+	'field'		:	4,
+	'rocks'		:	2,
+	'trees'		:	2,
+	'river'		:	3
+}
+
+function Tile(id,t) {
 	console.log('Contructing tile,', t);
 	this.type = decode[t] || 'void';
-	this.id = i;
-	this.image = 0;
-	this.level = 0;
-	this.resources = {crop: 0, wood: 0, ore: 0};
+	this.id = id;
+	this.image = Math.floor(Math.random()*numImages[this.type]);
+	// this.level = 0;
+	// this.resources = {crop: 0, wood: 0, ore: 0};
 
-	switch(this.type) {
-		case 'trees':
-			this.image = Math.floor(Math.random()*3);
-			this.resources.wood = 1000;
-			break;
-		case 'rocks':
-			this.resources.ore = 1000;
-			break;
-		case 'field':
-			this.image = Math.floor(Math.random()*3);
-			break;
-	}
+	// switch(this.type) {
+	// 	case 'trees':
+	// 		this.resources.wood = 1000;
+	// 		break;
+	// 	case 'rocks':
+	// 		this.resources.ore = 1000;
+	// 		break;
+	// 	case 'field':
+	// 		break;
+	// }
 }
 
 var decode = {
@@ -480,8 +494,13 @@ function updateCity(city, callback) {
 
 			// update the city tiles
 			for (var j = 0; j < tileIds.length; j++) {
+				if (city.tiles[tileIds[j]].type === 'field') {
+					city.tiles[tileIds[j]].image = Math.floor(Math.random()*numImages[tileType]);
+				}
+				console.log(city.tiles[tileIds[j]]);
+
 				city.tiles[tileIds[j]].type = tileType;
-				city.tiles[tileIds[j]].image = 0;
+				// city.tiles[tileIds[j]].image = 0;
 			}
 
 			// the finishTime of this order is now the time of the lastUpdate
@@ -541,10 +560,15 @@ function payForTroops(resources, troopType, n) {
 
 
 
-function buildTiles(sio, username, cityId, tileType, tiles) {
+function buildTiles(sio, username, cityId, tileType, tileIds, imgs) {
 	exports.getCityData(cityId, 'server', function(err, cityData) {
+		
 
-		sio.sockets.in(username).emit('builtTiles', {'tileType' : tileType, 'tiles' : tiles});
+		sio.sockets.in(username).emit('builtTiles', {
+			'tileType' : tileType,
+			'tiles' : tileIds,
+			'images': imgs
+		});
 		sio.sockets.in(username).emit('resourcePush', {
 			'cityId' : cityId,
 			'resources' : cityData.resources,
@@ -598,14 +622,18 @@ function orderTiles(sio, session, data, callback) {
 					'tileIds'    : data.tiles
 				});
 
-				// for (var i = 0; i < cityData.tiles.length; i++) {
-				// 	cityData.tiles[data.tiles[i]] = -encode[data.tileType];
-				// };
+				var imgs = [];
+				for (var i = 0; i < data.tiles.length; i++) {
+					if (cityData.tiles[data.tiles[i]].type === 'field') {
+						cityData.tiles[data.tiles[i]].image = Math.floor(Math.random()*numImages[tileType]);
+					} 
+					imgs.push(cityData.tiles[data.tiles[i]].image);
+				};
 
 				// console.log('ORDER: check 4', cityData);
 
 				setTimeout(function() {
-					buildTiles(sio, session.user.username, data.cityId, tileType, data.tiles);
+					buildTiles(sio, session.user.username, data.cityId, tileType, data.tiles, imgs);
 				}, buildTimes[tileType]*1000);
 
 				citiesTable.updateCity(cityData, function(err) {

@@ -208,7 +208,7 @@ function drawFieldInfo(infoPane) {
 	var houseAccordion = 
 		'<div id="house-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/house.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/house0.png">'+
 				'House' +
 				'<button id="buildHouse">Build</button>' +
 			'</h3>' +
@@ -244,7 +244,7 @@ function drawFieldInfo(infoPane) {
 	var tavernAccordion = 
 		'<div id="tavern-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/tavern.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/tavern0.png">'+
 				'Tavern' +
 				'<button id="buildTavern">Build</button>' +
 			'</h3>' +
@@ -280,7 +280,7 @@ function drawFieldInfo(infoPane) {
 	var tavernAccordion = 
 		'<div id="tavern-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/tavern.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/tavern0.png">'+
 				'Tavern' +
 				'<button id="buildTavern">Build</button>' +
 			'</h3>' +
@@ -314,7 +314,7 @@ function drawFieldInfo(infoPane) {
 	var warehouseAccordion = 
 		'<div id="warehouse-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/warehouse.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/warehouse0.png">'+
 				'Warehouse' +
 				'<button id="buildWarehouse">Build</button>' +
 			'</h3>' +
@@ -348,7 +348,7 @@ function drawFieldInfo(infoPane) {
 	var crannyAccordion = 
 		'<div id="cranny-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/cranny.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/cranny0.png">'+
 				'Cranny' +
 				'<button id="buildCranny">Build</button>' +
 			'</h3>' +
@@ -384,7 +384,7 @@ function drawFieldInfo(infoPane) {
 	var barracksAccordion = 
 		'<div id="barracks-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/barracks.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/barracks0.png">'+
 				'Barracks' +
 				'<button id="buildBarracks">Build</button>' +
 			'</h3>' +
@@ -419,7 +419,7 @@ function drawFieldInfo(infoPane) {
 	var stableAccordion = 
 		'<div id="stable-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/stable.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/stable0.png">'+
 				'Stable' +
 				'<button id="buildStable">Build</button>' +
 			'</h3>' +
@@ -453,7 +453,7 @@ function drawFieldInfo(infoPane) {
 	var capitalAccordion = 
 		'<div id="capital-acc" class="accordion-inner accordion-closed">' +
 			'<h3>' +
-				'<img src="'+SERVER+'/img/cityTiles/capital.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/capital0.png">'+
 				'Town Center' +
 				'<button id="buildCapital">Build</button>' +
 			'</h3>' +
@@ -469,7 +469,7 @@ function drawFieldInfo(infoPane) {
 	infoPane.html(
 		'<div class="accordion-open">' +
 			'<h3 class="outer-h3">' +
-				'<img src="'+SERVER+'/img/cityTiles/Grass4.png">'+
+				'<img src="'+SERVER+'/img/cityTiles/field0.png">'+
 				'Grassland' +
 			'</h3>' +
 			'<div class="outer-div">' +
@@ -529,7 +529,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/Water2.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/river0.png">'+
 						'River' +
 					'</h3>' +
 					'<div class="outer-div">' +
@@ -571,7 +571,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/trees.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/trees0.png">'+
 						'Forest' +
 					'</h3>' +
 					'<div class="outer-div">' +
@@ -582,7 +582,7 @@ function updateCityInfoPane() {
 					'<h3 class="outer-h3">Buildings</h3>' +
 					'<div id="sawmill-acc" class="accordion-inner accordion-closed last">' +
 						'<h3>' +
-							'<img src="'+SERVER+'/img/cityTiles/sawmill.png">'+
+							'<img src="'+SERVER+'/img/cityTiles/sawmill0.png">'+
 							'Lumber Camp' +
 							'<button id="buildSawmill">Build</button>' +
 						'</h3>' +
@@ -625,7 +625,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/rocks.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/rocks0.png">'+
 						'Rocks' +
 					'</h3>' +
 					'<div class="outer-div">' +
@@ -636,7 +636,7 @@ function updateCityInfoPane() {
 					'<h3 class="outer-h3">Buildings</h3>' +
 					'<div id="mine-acc" class="accordion-inner accordion-closed last">' +
 						'<h3>' +
-							'<img src="'+SERVER+'/img/cityTiles/mine.png">'+
+							'<img src="'+SERVER+'/img/cityTiles/mine0.png">'+
 							'Quarry' +
 							'<button id="buildMine">Build</button>' +
 						'</h3>' +
@@ -673,7 +673,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/sawmill.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/sawmill0.png">'+
 						'Lumber Camp' +
 						'<button id="makeTrees">Destroy</button>' +
 					'</h3>' +
@@ -688,7 +688,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/mine.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/mine0.png">'+
 						'Quarry' +
 						'<button id="makeRocks">Destroy</button>' +
 					'</h3>' +
@@ -702,7 +702,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/house.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/house0.png">'+
 						'House' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
@@ -716,7 +716,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/tavern.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/tavern0.png">'+
 						'Tavern' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
@@ -730,7 +730,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/warehouse.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/warehouse0.png">'+
 						'Warehouse' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
@@ -744,7 +744,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/cranny.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/cranny0.png">'+
 						'Cranny' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
@@ -758,7 +758,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/barracks.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/barracks0.png">'+
 						'Barracks' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
@@ -781,7 +781,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/tavern.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/tavern0.png">'+
 						'Stable' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
@@ -795,7 +795,7 @@ function updateCityInfoPane() {
 			infoPane.html(
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">' +
-						'<img src="'+SERVER+'/img/cityTiles/capital.png">'+
+						'<img src="'+SERVER+'/img/cityTiles/capital0.png">'+
 						'Town Center' +
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
