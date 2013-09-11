@@ -56,8 +56,8 @@ $('.scroll-position').on('click', function() {
 });
 
 // login handlers
-$('#loginForm').on('submit', function() {
-	event.preventDefault();
+$('#loginForm').on('submit', function(e) {
+	e.preventDefault();
 	var form = $('#loginForm')[0];
 	loginUser(form);
 });
@@ -98,8 +98,8 @@ $('#fader').on('click', function() {
 	});
 });
 
-$('#signUpForm').on('submit', function() {
-	event.preventDefault();
+$('#signUpForm').on('submit', function(e) {
+	e.preventDefault();
 	var form = $('#signUpForm')[0];
 	$('#signUpForm').attr('disabled', 'disabled');
 	emailSU(form);
