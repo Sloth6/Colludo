@@ -196,10 +196,7 @@ function drawMap2(ctx, width, height) {
 				ctx.drawImage(cityTileImgs['field0'], screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 			}
 			if (tile.type !== 'void' && tile.type !== 'river') {
-				// console.log(tile.type, cityTileImgs);
-
 				tileImg = cityTileImgs[tile.type + tile.image];
-				// console.log(tile.type + tile.image, tileImg);
 				try{
 					ctx.drawImage(tileImg, screenCoords.x-foo, screenCoords.y-foo/2, tileWidth+(2*foo), tileHeight+foo);
 				} 
@@ -207,10 +204,8 @@ function drawMap2(ctx, width, height) {
 					console.log(err, tileImg, tile.type + tile.image);
 				}
 			}
-		};
-	};
-
-
+		}
+	}
 	ctx.drawImage(gradientImg, 0, 0, width, height);
 }
 
