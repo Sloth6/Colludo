@@ -69,9 +69,25 @@ function displayStoredMessage(messageArray) {
 function readMessages(messageData) {
 	if (messageData) {
 		var messageData = messageData.reverse();
+		RECEIVED_COUNT = messageData.length;
+		updateNotificationBubble();
 		for (var i = 0; i < messageData.length; i++) {
 			displayStoredMessage( messageData[i] );
 			console.log('MESSAGE DATA: ', messageData[i]);
 		};
+	} else {
+		RECEIVED_COUNT = 0;
+		updateNotificationBubble();
+	}
+}
+
+function updateNotificationBubble() {
+	console.log('BUBBLES!!!', RECEIVED_COUNT);
+	var elem = $('#new-messages');
+	if (!RECEIVED_COUNT) {
+		elem.addClass('hidden');
+	} else {
+		elem.removeClass('hidden');
+		elem.text(RECEIVED_COUNT);
 	}
 }
