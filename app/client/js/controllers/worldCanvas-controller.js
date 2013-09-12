@@ -1,21 +1,26 @@
-function hexesUnderMouse(e) {
-	mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
-	// the following line would stop any other event handler from firing
-	// (such as the mouse's TrackballControls)
-	e.preventDefault();
-	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-	projector.unprojectVector( vector, camera );
-	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize());
-	var intersects = ray.intersectObjects( scene.children[2].children );
-	var hexes = intersects.filter(function(object) {return (object.object.name == 'hex')});
-	return hexes;
-}
+var deltV = 100; 
+var bounds = {
+	scrollMax: 420,
+	scrollMin: 50
+};
+function WorldInput() {
+	$('#worldZoomSlider').slider({
+		orientation: "vertical",
+		range: "max",
+		min: bounds.scrollMin,
+		max: bounds.scrollMax,
+		value: (bounds.scrollMax + bounds.scrollMin) - deltV,
+		slide: function( event, ui ) {
+			deltV = (bounds.scrollMax + bounds.scrollMin) - ui.value;
+		}
+	});
+} 
 
-function worldMouseDown(e) {
+
+
+WorldInput.prototype.mouseDown = function(e) {
 	var hexes = hexesUnderMouse(e);
-	console.log('mouse down', scene.children);
-
+	// console.log('mouse down', scene.children);
 	// create an array containing all objects in the scene with which the ray intersects
 	if ( hexes.length > 0 ) {
 		// this click is the placement of an army, we do not need to select the tile. 
@@ -41,7 +46,7 @@ function worldMouseDown(e) {
 		}
 	} 
 }
-function worldMouseUp(e) {
+WorldInput.prototype.mouseUp = function(e) {
 	var hexes = hexesUnderMouse(e);
 	// create an array containing all objects in the scene with which the ray intersects
 	if ( hexes.length > 0 ) {
@@ -62,7 +67,7 @@ function worldKeyDown(e) {
 		, d = 68
 		, s = 83;
 }
-function worldMouseMove(e) {
+WorldInput.prototype.mouseMove = function(e) {
 	var hexes = hexesUnderMouse(e);
 	if (hexes.length == 0) return;
 	if (!world.movingArmy) return;
@@ -82,12 +87,27 @@ function worldMouseMove(e) {
 		scene.add(selectedTile);
 	}
 }
-function worldWheel(delta) {
+WorldInput.prototype.wheel = function(delta) {
+	deltV += delta/30;
+	$('#worldZoomSlider').slider('value', ((bounds.scrollMax + bounds.scrollMin)-deltV).toString());
 }
 function raidCity(){
 	return;
 }
 
+function hexesUnderMouse(e) {
+	mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+	// the following line would stop any other event handler from firing
+	// (such as the mouse's TrackballControls)
+	e.preventDefault();
+	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+	projector.unprojectVector( vector, camera );
+	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize());
+	var intersects = ray.intersectObjects( scene.children[2].children );
+	var hexes = intersects.filter(function(object) {return (object.object.name == 'hex')});
+	return hexes;
+}
 function validMove(tile)
 {
 	if (tile.tileType == 'ocean') {
@@ -178,13 +198,9 @@ var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 // custom global variables
 var projector, mouse = { x: 0, y: 0 }, selectedTile;
-var deltV = 100; 
+
 var view = new THREE.Vector3(0,0,0);
 
-var bounds = {
-	scrollMax: 420,
-	scrollMin: 50
-};
 var tween;
 
 init();
@@ -222,6 +238,7 @@ function init() {
 	stats.domElement.style.left = '100px';
 	stats.domElement.style.zIndex = 100;
 	$('#world')[0].appendChild( stats.domElement );
+	$('#ThreeJS canvas').attr('id', 'worldCanvas');
 	// LIGHT
 	var light = new THREE.PointLight(0xffffff, 2);
 	light.position.set(200,400,400);
@@ -265,18 +282,8 @@ function init() {
 	 $('#world')[0].appendChild( rendererStats.domElement );
 	// initialize object to perform world/screen calculations
 	projector = new THREE.Projector();
-	$('#worldZoomSlider').slider({
-		orientation: "vertical",
-		range: "max",
-		min: bounds.scrollMin,
-		max: bounds.scrollMax,
-		value: (bounds.scrollMax + bounds.scrollMin) - deltV,
-		slide: function( event, ui ) {
-	deltV = (bounds.scrollMax + bounds.scrollMin) - ui.value;
-		}
-	});
+
 	// when the mouse moves, call the given function
-	// document.addEventListener( 'mousedown', onDocumentMouseDown, false );	
 }
 
 Math.radians = function(degrees) {

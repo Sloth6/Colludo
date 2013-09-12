@@ -2,12 +2,14 @@ function CityInputController() {
 	this.gliding = false;
 	this.isMouseDown = false;
 	this.lastTile= null;
+	this.zoomMin = 30;
+	this.zoomMax =  350;
 
 	$('#cityZoomSlider').slider({
 		orientation: "vertical",
 		range: "min",
-		min: 30,
-		max: 300,
+		min: this.zoomMin,
+		max: this.zoomMax,
 		value: tileWidth,
 		slide: function( event, ui ) {
 			var xyRatio = cityView.x/tileWidth;
@@ -98,23 +100,17 @@ CityInputController.prototype.mouseMove = function(e){
 }
 
 CityInputController.prototype.wheel = function(delta){
-	// Zoom in
-    if(delta > 0) {
-    	if(tileWidth < 300) {
-	    	cityView.x *= 1.03;
-	    	cityView.y *= 1.03;
-	    	tileWidth *= 1.03;
-	    }
-    }
-    // Zoom Out
-    else if (tileWidth > 30){
-    	cityView.x *= .97;
-    	cityView.y *= .97;
-    	tileWidth *= .97;
-    }
-    // $('#cityZoomSlider').slider('value', tileWidth.toString());
+	delta/=40;
+	var scale = (tileWidth+delta)/tileWidth;
+	
+	if(tileWidth+delta < this.zoomMax && tileWidth+delta > this.zoomMin) {
+		tileWidth+= delta;
+		cityView.x *= scale;
+		cityView.y *= scale;
+		$('#cityZoomSlider').slider('value', tileWidth.toString());
     drawMap();
     selectionContr.drawSelected();
+	} 
 }
 
 CityInputController.prototype.glide = function(dim, negative, n) {
