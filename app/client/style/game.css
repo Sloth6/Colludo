@@ -896,7 +896,7 @@ p {
 			}
 
 			#messageList {
-				overflow: auto;
+				overflow: hidden;
 				position: absolute;
 				margin-top: 50px;
 				height: 600px;

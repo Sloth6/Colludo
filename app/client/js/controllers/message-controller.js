@@ -22,13 +22,14 @@ $('#compose').on('submit', function(event) {
 	event.preventDefault();
 
 	var date = new Date();
-	var time = date.getTime();
+	var timeString = (date.getMonth()+1)+'x'+date.getDate()+'x'+date.getHours()+
+		'x'+date.getMinutes()+'x'+date.getSeconds();
 
 	console.log('SENDING: Preparing messageData');
 	var messageData = {
 		'to'      : this.to.value,
 		'subject' : this.subject.value,
-		'time'    : time,
+		'time'    : timeString,
 		'message' : this.message.value
 	};
 	console.log('SENDING: Prepared messageData', messageData);
@@ -70,7 +71,7 @@ function readMessages(messageData) {
 		var messageData = messageData.reverse();
 		for (var i = 0; i < messageData.length; i++) {
 			displayStoredMessage( messageData[i] );
-			// console.log('MESSAGE DATA: ', messageData[i]);
+			console.log('MESSAGE DATA: ', messageData[i]);
 		};
 	}
 }

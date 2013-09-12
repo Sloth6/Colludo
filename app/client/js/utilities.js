@@ -3,6 +3,7 @@ function assert(condition, message) {
         throw message || "Assertion failed";
     }
 }
+
 // name that panel!
 function getCurrentPanel() {
 	var active = $('li.active')[0];

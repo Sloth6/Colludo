@@ -4,7 +4,8 @@ socket.on('userData', function (data) {
 });
 
 socket.on('messageData', function (data) {
-	readMessages(data.messageData);
+	console.log('got messageData:', data);
+	readMessages(data);
 });
 
 socket.on('cityData', function (data) {

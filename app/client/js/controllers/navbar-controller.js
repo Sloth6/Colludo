@@ -116,12 +116,14 @@ $('#message-close').on('click', function() {
 	// console.log('fading...');
 	$('#fader').addClass('hidden');
 	$('#message').addClass('hidden');
+	$('#messageList').css('overflow', 'hidden');
 });
 
 function toggleMessaging(toId, fromId, to, from) {
 	// console.log('clicked message-link');
 	$('#fader').removeClass('hidden');
 	$('#message').removeClass('hidden');
+	$('#messageList').css('overflow', 'auto');
 }
 
 function slide(from, to, direction, fromId, toId) {

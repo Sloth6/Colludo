@@ -140,11 +140,10 @@ function initData(world, session, socket) {
 	});
 	socket.emit('mapData', {'cities': world.cities,
 										'armies': world.armies,
-										'battles': world.battles});
-		
-	// });
-	// MESSAGE.getMessages(JSON.parse(session.user.received_messages), function(err, data) {
-	// 	if (err) console.log('Error with getMessageData', err);
-	// 	else socket.emit('messageData', data);
-	// });
+										'battles': world.battles
+	});
+	messageManager.getMessages(JSON.parse(session.user.received_messages), function(err, data) {
+		if (err) console.log('Error with getMessageData', err);
+		else socket.emit('messageData', data);
+	});
 }
