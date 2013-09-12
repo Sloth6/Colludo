@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////////////////////
+/*
+	message-manager.js - handles the backend of all messages sent 
+*/
+////////////////////////////////////////////////////////////////////////////////
+
 var mysql = require('mysql');
 var AM = require('./account-manager.js');
 var sanitize = require('validator').sanitize
@@ -70,7 +76,6 @@ exports.sendMessage = function(session, messageData, callback) {
 		if (err) {
 			callback(err);
 		} else {
-			// console.log('SENDING: got receiver\'s info', receiverId, receivedMessages);
 			// store message in messages table
 			storeMessage(receiverId, messageData.to, session.user.id, 
 				session.user.username, messageArray, function(err, messageId) {
@@ -173,8 +178,7 @@ function storeMessage(receiverId, receiver, senderId, sender, messageArray, call
 	var messageStoreValues = [receiverId, receiver, senderId, sender, 
 		messageArray.time, messageArray.subject, messageArray.message, 
 		'0', '0', '0'];
-	// console.log(messageStoreValues);
-	// console.log(messageStoreQuery);
+
 	db.query(messageStoreQuery, messageStoreValues, function(err, rows) {
 		if (err) {
 			console.log('ERROR: sending message - storing message', err);
@@ -190,6 +194,7 @@ function receiverStoreMessage(receiverId, receivedMessages, callback) {
 	var receiverStoreQuery = 'UPDATE users SET received_messages = ? '+
 		'WHERE id = ?';
 	var receiverStoreValues = [receivedMessages, receiverId];
+
 	db.query(receiverStoreQuery, receiverStoreValues, function(err, rows) {
 		if (err) {
 			console.log('ERROR: sending message - updating receiver\'s '+
@@ -205,6 +210,7 @@ function receiverStoreMessage(receiverId, receivedMessages, callback) {
 function senderStoreMessage(senderId, sentMessages, callback) {
 	var senderStoreQuery = 'UPDATE users SET sent_messages = ? WHERE id = ?';
 	var senderStoreValues = [sentMessages, senderId];
+	
 	db.query(senderStoreQuery, senderStoreValues, function(err, rows) {
 		if (err) {
 			console.log('ERROR: sending message - updating sender\'s '+
