@@ -96,7 +96,7 @@ var numImages = {
 }
 
 function Tile(id,t) {
-	console.log('Contructing tile,', t);
+	// console.log('Contructing tile,', t);
 	this.type = decode[t] || 'void';
 	this.id = id;
 	this.image = Math.floor(Math.random()*numImages[this.type]);
@@ -310,6 +310,7 @@ function createCity(world, userId, userData, tileId, callback) {
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
 /*
 	getTilesWithinRadiusOf - returns an array of all the 
@@ -418,12 +419,8 @@ function getTileEconomy( cityTiles, tileId ) {
 	} else {
 		tileEconomy.storage = 0;
 		tileEconomy.hidden  = 0;
+		tileEconomy.workers = -tilePrices[ tile.type ].workers;
 	}
-
-	// {
-	// 	tileEconomy.workers    = -tilePrices[ tileTypeString ].workers;
-	// 	tileEconomy.population = 0;
-	// }
 
 	// console.log(tileEconomy);
 	return tileEconomy;	
@@ -558,12 +555,9 @@ function payForTroops(resources, troopType, n) {
 
 }
 
-
-
 function buildTiles(sio, username, cityId, tileType, tileIds, imgs) {
 	exports.getCityData(cityId, 'server', function(err, cityData) {
 		
-
 		sio.sockets.in(username).emit('builtTiles', {
 			'tileType' : tileType,
 			'tiles' : tileIds,
