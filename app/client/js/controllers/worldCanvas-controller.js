@@ -54,7 +54,7 @@ WorldInput.prototype.mouseUp = function(e) {
 	}
 
 }
-function worldKeyDown(e) {
+WorldInput.prototype.KeyDown = function(e) {
 	var key = e.keyCode
 		, dist = 40
 		, esc = 27

@@ -119,7 +119,7 @@ function bindMouse(cityInput, worldInput){
 				cityInput.keyDown(e);
 				break;
 			case 'world':
-				worldInput.keyDown(e)
+				worldInput.keyDown(e);
 				break;
 		}
 	});
@@ -157,13 +157,13 @@ function bindMouse(cityInput, worldInput){
 	// 	}
 	// }); 
 	$(document).mousewheel(function(event, delta, deltaX, deltaY) {
-		preventDefault(event);
     // console.log(delta, deltaX, deltaY);
-    switch(getCurrentPanel()) {
-			case 'city':
+    switch(event.target.id) {
+			case 'cityCanvas':
+				preventDefault(event);
 				cityInput.wheel(delta);
 				break;
-			case 'world':
+			case 'worldCanvas':
 				worldInput.wheel(delta);
 		}
 });
