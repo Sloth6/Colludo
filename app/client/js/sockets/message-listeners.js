@@ -10,6 +10,8 @@ socket.on('newMessage', function(messageArray) {
 	console.log(messageArray);
 
 	displayNewMessage(messageArray);
+	RECEIVED_COUNT++;
+	updateNotificationBubble();
 	console.log($('#new-messages'));
 });
 

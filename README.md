@@ -5,4 +5,4 @@ Colludo by OctoPunk
 
 Written by Daniel and Joel
 
-BITCHES and HOES
+This will be the best game ever!!!

@@ -181,17 +181,17 @@ City.prototype.orderTroops = function(troopType, n){
  *  if not, return false, and leave things as they were
  * 	otherwise, subtract the cost from your resources, but DONT CHANGE INCOMES!!!
  */
-City.prototype.payFor = function(n, oldType, newType){
+City.prototype.payFor = function(n, oldType, newType) {
 	console.log(this.resources, n, oldType, newType);
 	for (var resource in this.resources) { 
-		if (this.resources[resource] < priceScaleFraction(n) * n * prices[newType][resource]) {
-			console.log(this.resources[resource] , priceScaleFraction(n) * n * prices[newType][resource]);
+		if (this.resources[resource] < n * prices[newType][resource]) {
+			console.log(this.resources[resource] , n * prices[newType][resource]);
 			return false;
 		}
-	}
-	
+	}   
+	   
 	for (var resource in this.resources) {
-		this.resources[resource] -= priceScaleFraction(n) * n * prices[newType][resource];
+		this.resources[resource] -= n * prices[newType][resource];
 		this.income[resource] -= n*incomes[oldType][resource];
 		console.log(this.income[resource] , n*incomes[oldType][resource]);
 	}
