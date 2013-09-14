@@ -262,7 +262,7 @@ function getCityData (cityId, session, callback) {
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-var startingTiles=
+var startingTiles =
 	('x,x,x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
 	'x,x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
 	'x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,t,t,t,f,f,f,f,f,f,'+
