@@ -645,6 +645,8 @@ function buildTroops(sio, userData, cityId, troopType, n) {
 	var armyId;
 	var army;
 	exports.getCityData(cityId, 'server', function(cityData){
+		world.addTroops()
+		return;
 		MS.getTileById(cityData.tileId, function(err, tile){
 			if (err) {
 				console.log('build troops error!',err);
@@ -697,20 +699,20 @@ function buildTroops(sio, userData, cityId, troopType, n) {
 }
 
 function orderTroops(sio, session, cityId, troopType, n) {
+	return;
 	// console.log(session.user);
 	assert(troopType == 'calvary' || troopType == 'soldiers', 'Incorrect troop type!');
 	var now = Math.floor(Date.now()/1000)
 	  , finishTime = now + trainingTimes[troopType];
 
-	exports.getCityData(cityId, session, function(cityData) {
+	getCityData(cityId, session, function(err, cityData) {
+		if (err) return console.log("ERR", err);
 		if(payForTroops(cityData.resources, troopType, n)) { 
 
 			// cityData.trainingQueues.push({
 			// 	'finishTime' : finishTime,
 			// 	'troopType'   : troopType
 			// });
-
-
 			for (var resource in cityData.resources) {
 				cityData.resources[resource] -= n*troopPrices[troopType][resource];
 			}

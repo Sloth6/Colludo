@@ -877,7 +877,7 @@ function updateCityInfoPane() {
 		$('#train').on('submit', function(event) {
 			event.preventDefault();
 			var n = parseInt( $('#train')[0].soldiers.value);
-			orderTroops('soldiers', n);
+			city.orderTroops('soldiers', n);
 		});
 	}
 
