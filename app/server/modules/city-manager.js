@@ -1,98 +1,98 @@
 
-var RM 		= require('./army-manager.js')
-  , fs 		= require('fs')
+var RM = require('./army-manager.js')
+  , fs = require('fs')
   , citiesTable = require('./mysql/cities.js')
-  , assert 	= require('assert')
+  , assert = require('assert')
   , util = require('./utilities.js');
 
 var db = require('./db.js');
 
 var troopPrices = {
-	'soldiers'	: 	{'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 0},
-	'calvary'	: 	{'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 0},
+	'soldiers' : {'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 0},
+	'calvary'  : {'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 0},
 }
 
 var trainingTimes = {
-	'soldiers'	: 	1,
-	'calvary'	: 	6,
+	'soldiers' : 1,
+	'calvary'  : 6,
 }
 
 var tilePrices = {
 	// resource producers 
-	'farm'      :	{'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 1},
-	'mine' 		: 	{'crop': 50, 'wood': 80, 'ore': 40, 'workers' : 1},
-	'sawmill'	:	{'crop': 60, 'wood': 40, 'ore': 75, 'workers' : 1},
+	'farm'    : {'crop': 75, 'wood': 90, 'ore': 75, 'workers' : 1},
+	'mine'    : {'crop': 50, 'wood': 80, 'ore': 40, 'workers' : 1},
+	'sawmill' : {'crop': 60, 'wood': 40, 'ore': 75, 'workers' : 1},
 	
 	// city buildings
-	'house' 	:	{'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 0},
-	'barracks'	:	{'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 1},
-	'stable'	:	{'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 1},
-	'capital'	:	{'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 1},
-	'warehouse'	:	{'crop': 50, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'cranny'	:	{'crop': 50, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'tavern'	:	{'crop': 50, 'wood': 0, 'ore': 0, 'workers' : 1},
+	'house'     : {'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 0},
+	'barracks'  : {'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 1},
+	'stable'    : {'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 1},
+	'capital'   : {'crop': 30, 'wood': 90, 'ore': 40, 'workers' : 1},
+	'warehouse' : {'crop': 50, 'wood': 0,  'ore': 0,  'workers' : 0},
+	'cranny'    : {'crop': 50, 'wood': 0,  'ore': 0,  'workers' : 0},
+	'tavern'    : {'crop': 50, 'wood': 0,  'ore': 0,  'workers' : 1},
 
 	// city editing.
-	'field'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'rocks'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'river'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'field'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'rocks'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'river'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 };
 
 var tileIncomes = {
-	'farm'      :	{'crop': 10, 'wood': 0,  'ore': 0,  'workers' : 0},
-	'mine' 		: 	{'crop': 0,  'wood': 0,  'ore': 10, 'workers' : 0},
-	'sawmill'   :	{'crop': 0,  'wood': 10, 'ore': 0,  'workers' : 0},
+	'farm'      : {'crop': 10, 'wood': 0,  'ore': 0,  'workers' : 0},
+	'mine'      : {'crop': 0,  'wood': 0,  'ore': 10, 'workers' : 0},
+	'sawmill'   : {'crop': 0,  'wood': 10, 'ore': 0,  'workers' : 0},
 	
-	'house' 	:	{'crop': -5, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'barracks'	:	{'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
-	'stable'	:	{'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
-	'capital'	:	{'crop': -3,  'wood': 0, 'ore': 0, 'workers' : 0},
-	'warehouse'	:	{'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
-	'cranny'	:	{'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
-	'tavern'	:	{'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
+	'house'     : {'crop': -5, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'barracks'  : {'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
+	'stable'    : {'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
+	'capital'   : {'crop': -3, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'warehouse' : {'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
+	'cranny'    : {'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
+	'tavern'    : {'crop': 0,  'wood': 0, 'ore': 0, 'workers' : 0},
 
-	'field'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'rocks'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'trees'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
-	'river'		:	{'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'field'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'rocks'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'trees'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
+	'river'     : {'crop': 0, 'wood': 0, 'ore': 0, 'workers' : 0},
 };
 
 var buildTimes = {
-	'farm'      :	1,
-	'mine' 		: 	1,
-	'sawmill'   :	1,
+	'farm'      : 1,
+	'mine'      : 1,
+	'sawmill'   : 1,
 	
-	'house' 	:	1,
-	'barracks'	:	1,
-	'stable'    :   1,
-	'capital'	:	1,
-	'warehouse'	:	1,
-	'cranny'	:	1,
-	'tavern'	:	1,
+	'house'     : 1,
+	'barracks'  : 1,
+	'stable'    : 1,
+	'capital'   : 1,
+	'warehouse' : 1,
+	'cranny'    : 1,
+	'tavern'    : 1,
 
-	'field'		:	0,
-	'rocks'		:	0,
-	'trees'		:	0,
-	'river'		:	0,
+	'field'     : 0,
+	'rocks'     : 0,
+	'trees'     : 0,
+	'river'     : 0,
 }
 var numImages = {
-	'farm'      :	1,
-	'mine' 		: 	2,
-	'sawmill'   :	2,
+	'farm'      : 1,
+	'mine'      : 2,
+	'sawmill'   : 2,
 	
-	'house' 	:	2,
-	'barracks'	:	1,
-	'stable'    :   1,
-	'capital'	:	1,
-	'warehouse'	:	1,
-	'cranny'	:	1,
-	'tavern'	:	1,
+	'house'     : 2,
+	'barracks'  : 1,
+	'stable'    : 1,
+	'capital'   : 1,
+	'warehouse' : 1,
+	'cranny'    : 1,
+	'tavern'    : 1,
 
-	'field'		:	4,
-	'rocks'		:	2,
-	'trees'		:	2,
-	'river'		:	3
+	'field'     : 4,
+	'rocks'     : 2,
+	'trees'     : 2,
+	'river'     : 3,
 }
 
 function Tile(id,t) {
@@ -116,22 +116,22 @@ function Tile(id,t) {
 }
 
 var decode = {
-	'f' : 'field',
+	'f'  : 'field',
 	'f0' : 'field',
-	'r' : 'river',
-	't' : 'trees',
-	'o' : 'rocks',
+	'r'  : 'river',
+	't'  : 'trees',
+	'o'  : 'rocks',
 	'sm' : 'sawmill',
-	'm' : 'mine'	,
-	'h' : 'house'	,
-	'a' : 'farm'     ,
-	'c' : 'capital',
-	'b' : 'barracks',
+	'm'  : 'mine'	,
+	'h'  : 'house',
+	'a'  : 'farm',
+	'c'  : 'capital',
+	'b'  : 'barracks',
 	'st' : 'stable',
-	'w' : 'warehouse',
+	'w'  : 'warehouse',
 	'cr' : 'cranny',
 	'ta' : 'tavern',
-	'x' : 'void'
+	'x'  : 'void',
 };
 
 exports.loadWorld = loadWorld;
@@ -262,7 +262,7 @@ function getCityData (cityId, session, callback) {
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-var startingTiles=
+var startingTiles =
 	('x,x,x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
 	'x,x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,f,f,f,f,f,f,f,f,'+
 	'x,x,x,x,x,x,x,x,x,x,f,f,f,f,f,f,t,t,t,f,f,f,f,f,f,'+
