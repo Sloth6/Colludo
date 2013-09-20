@@ -77,8 +77,12 @@ SelectionController.prototype.select = function(tile) {
 	} else {
 		var e = self.selected[index];
 		self.selected.splice(index,1);
-		drawMap();
-		this.drawSelected();
+		if (self.selected.length == 0) {
+			self.clear();
+		} else {
+			drawMap();
+			this.drawSelected();
+		}
 	}
 	updateCityInfoPane();
 	// self.drawSelected();

@@ -149,6 +149,7 @@ CityInputController.prototype.keyDown = function(evt) {
   	// Esc clears selected. 
 	if (key == esc) {
 		selectionContr.clear();
+		updateCityInfoPane();
 	}
 	// } if (key == left || key == a) {
 	// 	cityView.x -= dist;
