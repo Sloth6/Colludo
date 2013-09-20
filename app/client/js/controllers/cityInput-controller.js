@@ -69,7 +69,21 @@ CityInputController.prototype.mouseDown = function(e) {
 }
 // When we move the mouse changed the highlighted area. 
 CityInputController.prototype.mouseMove = function(e) {
+	var mouseX = e.pageX;
+	var mouseY = e.pageY;
+	var XY = xy(e);
+	var tile = city.tileFromXY(XY.x,XY.y);
+
+	$('#hover').css({
+		'left' : mouseX + 20,
+		'top'  : mouseY,
+	});
+
+	$('#hover p').text('Tile: '+tile.type);
+	// console.log(tile);
 	return;
+
+	// for old selecting - not in use now
 	var tileWidth = cityCanvas.width/NUM_TILES;
   var tileHeight= tileWidth/2;
 	var rect = cityCanvas.getBoundingClientRect();
@@ -82,10 +96,10 @@ CityInputController.prototype.mouseMove = function(e) {
 		if (y >= cityCanvas.height || y < 0) return;
 		if (city.tileFromXY(x,y).type == 'null') return;
 		console.log(selectionContr.lastTile);
-		if(selectionContr.lastTile == null)return;
+		if (selectionContr.lastTile == null) return;
 
 		var tile = city.tileFromXY(x, y);
-		if (tile.id >= NUM_TILES * NUM_TILES) {return};
+		if (tile.id >= NUM_TILES * NUM_TILES) return;
 
 		// console.log(	selected.length + ((Math.abs(tile.row - this.lastTile.row)+1)  *  (Math.abs(tile.col-this.lastTile.col)+1) ));
 		/*
