@@ -28,7 +28,7 @@ SelectionController.prototype.addToSelected = function(a,b) {
 	  var rcb = rowCol(b.id);
 
 
-	 console.log(a.id, b.id);
+	console.log(a.id, b.id);
 	// Switch bounds so we always loop from top left to lower right. 
 	if (rca.row < rcb.row) {
 		startRow = rca.row;

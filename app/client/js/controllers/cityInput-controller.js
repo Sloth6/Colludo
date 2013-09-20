@@ -47,7 +47,7 @@ CityInputController.prototype.mouseUp = function(e) {
 	}
 }
 
-function xy(e){
+function xy(e) {
 	var rect = cityCanvas.getBoundingClientRect();
 	// console.log({
 	// 	x: Math.floor(e.clientX - rect.left),
@@ -68,7 +68,7 @@ CityInputController.prototype.mouseDown = function(e) {
 
 }
 // When we move the mouse changed the highlighted area. 
-CityInputController.prototype.mouseMove = function(e){
+CityInputController.prototype.mouseMove = function(e) {
 	return;
 	var tileWidth = cityCanvas.width/NUM_TILES;
   var tileHeight= tileWidth/2;

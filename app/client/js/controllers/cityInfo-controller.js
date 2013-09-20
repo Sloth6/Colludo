@@ -361,7 +361,7 @@ function drawFieldInfo(infoPane) {
 
 
 	// for Barracks
-	var description = 'Build a barracks to train troops to defend your village.'+
+	var description = 'Build a barracks to train troops to defend your village. '+
 		'You could also conquer people with them, but that would not be nice.';
 	
 	var foodPrice = Math.ceil( prices['barracks'].crop * tileCount * priceScaleFraction(tileCount) )
@@ -389,7 +389,7 @@ function drawFieldInfo(infoPane) {
 				'<button id="buildBarracks">Build</button>' +
 			'</h3>' +
 			'<div>' +
-				'<p>'+description +'</p>' +
+				'<p>'+description+'</p>' +
 				'<p id="price-string">'+priceString +'</p>' +
 				'<p id="income-string">'+incomeString+'</p>' +
 			'</div>' +
@@ -763,14 +763,14 @@ function updateCityInfoPane() {
 						'<button id="clearTile">Destroy</button>' +
 					'</h3>' +
 					'<div class="outer-div">' +
-						'<p>BEER! \'nuf said.</p>' +
+						'<p>It\'s troop training time!</p>' +
 					'</div>' +
 				'</div>' +
 				'<div class="accordion-open">' +
 					'<h3 class="outer-h3">Training</h3>' +
 					'<div class="outer-div">' +
 						'<form id="train">' +
-							'<input type="text" name="soldiers" placeholder="Soldiers">'+
+							'<input type="number" min="0" name="soldiers" value="0">'+
 							'<input type="submit" value="Train">' +
 						'</form>' +
 					'</div>' +
