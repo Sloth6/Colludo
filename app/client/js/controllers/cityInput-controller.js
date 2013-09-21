@@ -1,9 +1,10 @@
 function CityInputController() {
 	this.gliding = false;
 	this.isMouseDown = false;
-	this.lastTile= null;
+	this.lastTile = null;
 	this.zoomMin = 30;
-	this.zoomMax =  350;
+	this.zoomMax = 350;
+	this.timer = null;
 
 	$('#cityZoomSlider').slider({
 		orientation: "vertical",
@@ -65,21 +66,33 @@ CityInputController.prototype.mouseDown = function(e) {
 	var XY = xy(e);
 	var tile = city.tileFromXY(XY.x,XY.y);
 	selectionContr.select(tile);
-
 }
+
 // When we move the mouse changed the highlighted area. 
 CityInputController.prototype.mouseMove = function(e) {
+	$('#hover').css('display', 'none');
+	if (this.timer) {
+		// console.log('clearing timer');
+		window.clearTimeout(this.timer);
+	}
+
 	var mouseX = e.pageX;
 	var mouseY = e.pageY;
 	var XY = xy(e);
 	var tile = city.tileFromXY(XY.x,XY.y);
 
-	$('#hover').css({
-		'left' : mouseX + 20,
-		'top'  : mouseY,
-	});
+	if (tile && tile.id > 0 && tile.id <= 625 && tile.type != 'void') {
+		// console.log('on a valid tile');
+		this.timer = setTimeout(function() {
+			$('#hover').css({
+				'display' : 'block',
+				'left' : mouseX + 20,
+				'top'  : mouseY,
+			});
 
-	$('#hover p').text('Tile: '+tile.type);
+			$('#hover p').text('Tile: '+tile.type);
+		}, 3000);
+	}
 	// console.log(tile);
 	return;
 
@@ -118,7 +131,7 @@ CityInputController.prototype.wheel = function(delta){
 	var scale = (tileWidth+delta)/tileWidth;
 	
 	if(tileWidth+delta < this.zoomMax && tileWidth+delta > this.zoomMin) {
-		tileWidth+= delta;
+		tileWidth += delta;
 		cityView.x *= scale;
 		cityView.y *= scale;
 		$('#cityZoomSlider').slider('value', tileWidth.toString());

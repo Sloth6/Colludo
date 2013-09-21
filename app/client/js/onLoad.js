@@ -26,14 +26,17 @@ var cityTileNames = [
 	'field0', 'field1', 'field2', 'field3', 
 	'river0', 'river1', 'river2',
 	'trees0','trees1','trees2',
-
 	'rocks0', 'rocks1',
 	'mine0', 'mine1',
 	'sawmill0','sawmill1',
 	'house0','house1',
 	'farm0', 
-	'capital0', 'barracks0',
-	'stable0', 'warehouse0', 'cranny0', 'tavern0'];
+	'capital0', 
+	'barracks0',
+	'stable0', 
+	'warehouse0', 
+	'cranny0', 
+	'tavern0'];
 var cityTileImgs = {};//Image objects array.
 
 var buildingImage = new Image();
@@ -56,11 +59,11 @@ $(document).ready(function() {
 	cityInputContr = new CityInputController();
 	worldInput = new WorldInput();
 
-	loadImages(mapTilePath, mapTileNames, mapTiles, function(){
+	loadImages(mapTilePath, mapTileNames, mapTiles, function() {
 		haveImages = true;
 	});
 
-	loadImages2(cityTilePath, cityTileNames, cityTileImgs, function(){
+	loadImages2(cityTilePath, cityTileNames, cityTileImgs, function() {
 		haveCityImages = true;
 	});
 
@@ -140,6 +143,9 @@ function bindMouse(cityInput, worldInput){
 				cityInput.mouseMove(e);
 				break;
 			case 'worldCanvas':
+				break;
+			default:
+				window.clearTimeout(cityInput.timer);
 				break;
 		}
 	});
