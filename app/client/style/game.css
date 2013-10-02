@@ -185,6 +185,22 @@ p {
 	left: 0;
 }
 
+#hover {
+	position: absolute;
+	display: none;
+	padding: 5px;
+	border-radius: 2px;
+
+	height: auto;
+	top: 50%;
+
+	width: auto;
+	left: 50%;
+
+	background-color: rgba(0,0,0,0.7);
+	color: white;
+}
+
 #storage {
 	position: absolute;
 
