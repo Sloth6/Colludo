@@ -5,6 +5,18 @@ exports.insert = insert;
 // var db = require('/var/www/html/colludo/app/server/modules/db.js');
 var db = require(__dirname + '/../db.js');
 
+
+function formatArmy(army) {
+	return {
+		'id'	: army.id,
+		'userId' : army.player_id,
+		'user'   : army.username,
+		'tileId' : army.tile_id,
+		'soldiers' : army.soldiers,
+		'calvary' : army.calvary
+	}
+}
+
 function select(armyId, callback) {
 	var query = 'SELECT id, player_id, username, tile_id, soldiers, calvary'+
 		' FROM armies WHERE id = ?'
@@ -16,16 +28,6 @@ function select(armyId, callback) {
 		 	callback(null, formatArmy(rows[0]));
 		 }
 	});
-	function formatArmy(army) {
-		return {
-			'id'	: army.id,
-			'userId' : army.player_id,
-			'user'   : army.username,
-			'tileId' : army.tile_id,
-			'soldiers' : army.soldiers,
-			'calvary' : army.calavry,
-		}
-	}
 }
 
 function selectAll(callback) {
@@ -38,16 +40,7 @@ function selectAll(callback) {
 		 	callback(null, rows.map(formatArmy));
 		 }
 	});
-	function formatArmy(army) {
-		return {
-			'id'	: army.id,
-			'userId' : army.player_id,
-			'user'   : army.username,
-			'tileId' : army.tile_id,
-			'soldiers' : army.soldiers,
-			'calvary' : army.calavry,
-		}
-	}
+	
 }
 
 function deleteArmy(army, tileId) {

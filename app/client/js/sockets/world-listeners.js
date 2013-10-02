@@ -1,25 +1,38 @@
-$(document).ready(function(){
+// $(document).ready(function(){
+
+	console.log('IM HERE!!!');
+
+	socket.on('msg', function(data){
+		console.log('data:', data);
+	});
+
 	socket.on('newArmy', function(data){
 		player.armies.push(data.armyId);
 	});
 
 	socket.on('armyData', function (data) {
+		console.log('foo',data);
+		if (!world.armies[data.id]) {
+			console.log('ERR trying to modify army that doesnt exist.', data);
+		} else {
+			console.log(data, world.armies[data.id]);
+			world.armies[data.id].soldiers = data.soldiers;
+			world.armies[data.id].calvary = data.calvary;
+			console.log('armyData', data);
+			setWorldInfoPane(world.cities, world.armies);
+		}
 		// console.log	world.armies, data.id);
-		world.armies[data.id] = data;
-		console.log('armyData', data);
-		drawWorld();
+		
 	});
 
 	socket.on('battle', function(data){
 		world.battles[data.id] = data;
 		console.log('gotBattle', data);
-		drawWorld();
 		console.log(data);
 	});
 
 	socket.on('endBattle', function(data){
 		world.battles[data.id] = null;
-		drawWorld();
 		console.log('end battle', data);
 	});
 
@@ -28,6 +41,7 @@ $(document).ready(function(){
 		world.addArmy(data);
 		setWorldInfoPane(world.cities, world.armies);
 	});
+
 	socket.on('newCity', function(data) {
 		console.log('newCity', data);
 		world.addCity(data);
@@ -45,10 +59,9 @@ $(document).ready(function(){
 	});
 
 	socket.on('moveArmy', function (data) {
+		console.log('moveArmy', data);
 		var army = world.armies[data.armyId];
-
 	  army.mesh.position.copy( positionOfTile(data.newTile));
-
 	  if (world.content[data.newTile]) {
 	    world.content[data.newTile].army = data.armyId;
 	  } else {
@@ -77,7 +90,7 @@ $(document).ready(function(){
 	// 	//console.log("data", data);
 	// 	mapSegments[data.segId] = data.mapSeg;
 	// 	// localStorage[data.segId.toString()] = JSON.stringify(data.mapSeg);
-	// 	// drawWorld();
+	// 	
 	// 	drawMapSegment(data.segId);
 	// 	for (var i = 0; i < data.mapSeg.length; i++) {
 	// 		if (data.mapSeg[i][2] >0) requestCityData(data.mapSeg[i][2]);
@@ -85,4 +98,4 @@ $(document).ready(function(){
 	// 	};
 	// });
 	
-});
+// });

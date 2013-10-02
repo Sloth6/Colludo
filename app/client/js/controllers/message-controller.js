@@ -82,7 +82,7 @@ function readMessages(messageData) {
 }
 
 function updateNotificationBubble() {
-	console.log('BUBBLES!!!', RECEIVED_COUNT);
+	// console.log('BUBBLES!!!', RECEIVED_COUNT);
 	var elem = $('#new-messages');
 	if (!RECEIVED_COUNT) {
 		elem.addClass('hidden');

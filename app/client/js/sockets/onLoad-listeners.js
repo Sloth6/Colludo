@@ -1,4 +1,4 @@
-
+'use strict';
 socket.on('userData', function (data) {
 	player = new Player(data.name, data.cities, data.armies);
 });
@@ -37,3 +37,4 @@ socket.on('mapData', function(data) {
 		setWorldInfoPane(world.cities, world.armies);
 	});
 });
+

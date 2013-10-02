@@ -13,6 +13,17 @@ var db = require('./db.js');
 var sio;
 var connected = 0;	
 
+
+
+var World = require('./world-manager.js');
+var world = new World(48,48);
+armyManager.loadWorld(world, function() {
+	cityManager.loadWorld(world, function() {
+		console.log('SERVER LOADED', world.content);
+	});
+});
+global.world = world;
+
 module.exports.socketServer = socketServer;
 
 function eastCoastTime() {
@@ -55,15 +66,16 @@ function socketServer(app, server, sessionStore, cookieParser) {
   	console.log('USER LOGGED ON:', session.user.username, connected +' ONLINE.');	
 		socket.join(session.user.username);
 
+		sio.sockets.emit('msg', {foo: 'foo'});
+
 		socket.on('requestInitData', function(data){
 			if(session && session.user)
-				initData(world, session, socket);
-			
+				initData(session, socket);
 		});
 
 		// data = {to, subject, time, message}
 		socket.on('sendMessage', function(data) {
-			if(!session || !session.user)return;
+			if (!session || !session.user) return;
 			console.log('SENDING: sending message...', session);
 			messageManager.sendMessage(session, data, function(err, messageArray) {
 				if (err) {
@@ -97,9 +109,8 @@ function socketServer(app, server, sessionStore, cookieParser) {
 
 		// data {armyId, oldTile, newTile}
 		socket.on('armyMovement', function(data) {
-			console.log('Army moving!', data);
-			if(!session || !session.user)return;
-			world.moveArmy(data.armyId, data.path, socket);
+			if(!session || !session.user) return console.log('no session!');
+			global.world.moveArmy(data.armyId, data.path, sio);
 		});
 
 	//  	socket.on('getCityData', function (data) {
@@ -127,7 +138,7 @@ function socketServer(app, server, sessionStore, cookieParser) {
 }
 
 
-function initData(world, session, socket) {
+function initData(session, socket) {
 	// console.log('ask for user data', session);
 	accountManager.getUserData(session, function(err, userData){
 		if (err) console.log('Error with getuserData', err);
@@ -138,10 +149,11 @@ function initData(world, session, socket) {
 		if (err) console.log('Error with getcityData', err);
 		else socket.emit('cityData', cityData);
 	});
-	socket.emit('mapData', {'cities': world.cities,
-										'armies': world.armies,
-										'battles': world.battles
+	socket.emit('mapData', {'cities': global.world.cities,
+										'armies': global.world.armies,
+										'battles': global.world.battles
 	});
+
 	messageManager.getMessages(JSON.parse(session.user.received_messages), function(err, data) {
 		if (err) console.log('Error with getMessageData', err);
 		else socket.emit('messageData', data);

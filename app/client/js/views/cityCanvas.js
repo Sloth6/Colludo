@@ -145,7 +145,7 @@ function drawMap() {
 	} else {
 		var oldTileWidth = tileWidth;
 		var oldView = {'x' : cityView.x, 'y': cityView.y};
-		tileWidth = 240;
+		tileWidth = 140;
 		var bufferWidth = 13 * tileWidth * 2, 
 	  	bufferHeight = 25 * tileWidth/2 * 2;
 

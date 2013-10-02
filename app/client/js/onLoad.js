@@ -9,17 +9,21 @@ var selectionContr;
 var city;
 var cityInputContr;
 var worldInput;
+var assets = {
+	geometries : {},
+	materials : {}
+};
 
 var cityCanvas
-  , cityCtx
-  , worldCanvas
-  , worldCtx
+var cityCtx;
+var worldCanvas;
+var worldCtx;
 
-  , mapTilePath = '/img/hexTiles/'
-  , mapTileNames = ['grass.png', 'city0.png',  'ocean.png', 'coastal.png',
+var mapTilePath = '/img/hexTiles/';
+var mapTileNames = ['grass.png', 'city0.png',  'ocean.png', 'coastal.png',
 			'forrest.png', 'mountain.png', 'tree.png','hill.png', 'treeHill.png',
 			 'playerArmy.png', 'battle.png', 'hexSelected.png', 'enemyArmy.png']
-  , mapTiles = [];//Image objects array.
+var mapTiles = [];//Image objects array.;
 
 var cityTilePath = '/img/cityTiles/';
 var cityTileNames = [
@@ -143,19 +147,6 @@ function bindMouse(cityInput, worldInput){
 				break;
 		}
 	});
-
-	// $(document).bind('mousewheel DOMMouseScroll', function(event) {
-	//   preventDefault(event);
-	//   var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
-	//   console.log(delta);
-	//   switch(getCurrentPanel()) {
-	// 		case 'city':
-	// 			cityInput.wheel(delta);
-	// 			break;
-	// 		case 'world':
-	// 			break;
-	// 	}
-	// }); 
 	$(document).mousewheel(function(event, delta, deltaX, deltaY) {
     // console.log(delta, deltaX, deltaY);
     switch(event.target.id) {
@@ -164,18 +155,10 @@ function bindMouse(cityInput, worldInput){
 				cityInput.wheel(delta);
 				break;
 			case 'worldCanvas':
+				preventDefault(event);
 				worldInput.wheel(delta);
 		}
 });
-	// $('#cityCanvas').mousewheel(function(e) {
-	// 	(getCurrentPanel() == 'city') ? cityWheel(e) : worldWheel(e);
-	// });
-
-
-	// if (window.addEventListener) {
-	//     window.addEventListener('DOMMouseScroll', wheel, false);
-	// }
-	// window.onmousewheel = document.onmousewheel = wheel;
 }
 function preventDefault(e) {
 	e = e || window.event;
@@ -197,41 +180,10 @@ var wheel = function(e) {
 			case 'world':
 				break;
 		}
-
-	// var element = (e.srcElement) ? e.srcElement.id : e.originalTarget.id;
-	
-	
-	
-	// if (element == 'cityCanvas') {
-	// 	preventDefault(e);
-	// 	cityWheel(delta);
-	// } else if (element == 'worldCanvas') {
-	// 	preventDefault(e);
-	// 	worldWheel(delta);
-	// }
 }
-
-
 
 function cityBindInput(){
 	//  No buttons yet. 
 
 	cityCanvas.onselectstart = function () { return false; }
-}
-
-function worldBindInput() {
-	// Buttons
-	var zInButton = document.getElementById("zoomIn");
-	var zOutButton= document.getElementById("zoomOut");
-	var showCoordsButton = document.getElementById("showCoords");
-	var moveArmyButton = document.getElementById('moveArmy');
-
-	//Map the button being clicked to function handlers. 
-	// zInButton.onclick = function(){worldWheel(-5)};
-	// zOutButton.onclick= function(){worldWheel(5)};
-	showCoordsButton.onclick = function(){
-		showCords = !showCords;
-		draw_hex_field();
-	};
-	moveArmyButton.onclick = toggleMovingArmy;
 }

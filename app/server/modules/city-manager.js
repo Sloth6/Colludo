@@ -216,7 +216,7 @@ function loadWorld(world, callback) {
 			for (var i = 0; i < cities.length; i++)
 			{
 				var city = cities[i];
-				world.addCity(city)
+				global.world.addCity(city)
 			}
 			if (callback) callback();
 		}
@@ -295,7 +295,7 @@ function createCity(world, userId, userData, tileId, callback) {
 		if (err) return callback(err);
 		citiesTable.selectCity(cityId, function(err, city){
 			if (err) return callback(err);
-			world.addCity(city);
+			global.world.addCity(city);
 			var sio = require('./sockets.js').sio;
 			sio.sockets.emit('newCity', city);
 			callback(null, city);
@@ -546,13 +546,10 @@ function canAffordBuildings(oldTileType, tileType, numTiles, cityData) {
 
 function payForTroops(resources, troopType, n) {
 	assert(troopType == 'calvary' || troopType == 'soldiers', 'Incorrect troop type!');
-
-
 	if (resources.crop < troopPrices[troopType].crop) return false;
 	if (resources.wood < troopPrices[troopType].wood) return false;
 	if (resources.ore < troopPrices[troopType].ore) return false;
 	return true;
-
 }
 
 function buildTiles(sio, username, cityId, tileType, tileIds, imgs) {
@@ -640,85 +637,24 @@ function orderTiles(sio, session, data, callback) {
 	}
 }
 
-
-function buildTroops(sio, userData, cityId, troopType, n) {
-	var armyId;
-	var army;
-	exports.getCityData(cityId, 'server', function(cityData){
-		world.addTroops()
-		return;
-		MS.getTileById(cityData.tileId, function(err, tile){
-			if (err) {
-				console.log('build troops error!',err);
-			} else {
-				// See if any army is currently on this city.
-				armyId = tile[3];
-				if (armyId) {
-					// If so, modify it,
-					RM.getArmyData(armyId, 'server', function(err, armyData) {
-						if (!err) {
-							armyData[troopType] += n;
-							RM.setArmyData(armyData, function(){
-								console.log('trained troops!');
-								sio.sockets.emit('armyData', armyData);
-							});
-						};
-					})
-
-				} else {
-					// Else, create a new army. 
-					armyData = {
-						'soldiers' : 0,
-						'calvary' : 0,
-					}
-					armyData[troopType] = n;
-					RM.addArmy (userData.id, tile[0], userData.username, armyData, function(err, armyId){
-						if(err)console.log('err', err);
-						else {
-							armyData.id = armyId;
-							armyData.username = userData.username;
-							armyData.crop = 0;
-							armyData.wood = 0;
-							armyData.ore = 0;
-
-							addArmyToPlayer(sio, userData, armyId, function(err) {
-								if (err) console.log('addArmyToPlayer ERR', err);
-							});
-							MS.setTile(tile[0], cityId, armyId, 'server', function (err) {
-								if (err) console.log('setTile, error is:', err);
-								sio.sockets.emit('armyData' , armyData);
-
-							});
-						}
-					});
-				}
-			}
-		}) 
-	});
-	console.log(cityId, troopType, n);
-}
-
+/*
+	First step in building troops. 
+*/
 function orderTroops(sio, session, cityId, troopType, n) {
-	return;
-	// console.log(session.user);
 	assert(troopType == 'calvary' || troopType == 'soldiers', 'Incorrect troop type!');
-	var now = Math.floor(Date.now()/1000)
-	  , finishTime = now + trainingTimes[troopType];
+	var now = Math.floor(Date.now()/1000);
+	var finishTime = now + trainingTimes[troopType];
 
 	getCityData(cityId, session, function(err, cityData) {
 		if (err) return console.log("ERR", err);
 		if(payForTroops(cityData.resources, troopType, n)) { 
 
-			// cityData.trainingQueues.push({
-			// 	'finishTime' : finishTime,
-			// 	'troopType'   : troopType
-			// });
 			for (var resource in cityData.resources) {
 				cityData.resources[resource] -= n*troopPrices[troopType][resource];
 			}
 
 			setTimeout(function() {
-				buildTroops(sio, session.user,cityId, troopType, n);
+				global.world.addTroops(sio, session.user,cityId, troopType, n);
 			},	trainingTimes[troopType]*1000);
 
 			citiesTable.updateCity(cityData, function(err) {
@@ -727,5 +663,4 @@ function orderTroops(sio, session, cityId, troopType, n) {
 
 		}
 	});
-
 }

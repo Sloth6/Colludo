@@ -68,11 +68,12 @@ function World() {
 }
 
 World.prototype.addCity = function(city) {
-	var geometry = new THREE.SphereGeometry( 6, 4, 4 );
-	var material = new THREE.MeshLambertMaterial( { color: 0x000088 } );
+	var geometry = assets.geometries['city'];//new THREE.SphereGeometry( 6, 4, 4 );
+	var material = new THREE.MeshLambertMaterial( { color: 0x222222 } );
 	var cityMesh = new THREE.Mesh( geometry, material );
 	cityMesh.position = positionOfTile(city.tileId);
-
+	cityMesh.scale.set(7,7,7);
+	cityMesh.rotation.y = (3.1415 /2);
 	cityMesh.name = city.name;
 	cityMesh.user = city.user;
 	cityMesh.id = city.id;
@@ -101,9 +102,7 @@ World.prototype.addArmy = function(army) {
 		army.user,
 		army.soldiers,
 		army.calvary);
-	console.log('adding', world.armies[army.id]);
 	scene.add(world.armies[army.id].mesh);
-
 	world.content[army.tileId] = {'army': army.id};
 	if (world.content[army.tileId]) {
 		world.content[army.tileId]['army'] = army.id;

@@ -57,7 +57,7 @@ exports.addNewAccount = function(newData, callback) {
 			if (rows2.length != 0) return callback('email-taken');
 
 			register(newData, function(err) {
-				if(err) callback(err);
+				if (err) callback(err);
 				else callback(null);
 			});
 		});
@@ -67,17 +67,17 @@ exports.addNewAccount = function(newData, callback) {
 // This code is damn fine. 
 // callback(err)
 function register(userData, callback) {
-	var userId
-	  , cityId
-	  , tileId
-	  , armyId;
+	var userId;
+	var cityId;
+	var tileId;
+	var armyId;
 	addUser(userData, function (err, userId) {
 		if (err) return callback(err);
-		world.getFreeTile(function (err, tileId) {
+		global.world.getFreeTile(function (err, tileId) {
 			if (err) return callback(err);
 			CM.createCity(world, userId, userData, tileId, function (err, city) {
 				if (err) return callback(err);
-				AM.createArmy(world, userId, tileId, userData.user, startingArmy, function (err, army) {
+				AM.createArmy(userId, tileId, userData.user, startingArmy, function (err, army) {
 					if (err) return callback(err);
 					updateUser(userId, city.id, army.id, function (err) {
 						callback(null);		
@@ -88,14 +88,14 @@ function register(userData, callback) {
 	});
 }
 
-function addArmyToPlayer(sio, userData, armyId, callback){
+exports.addArmyToPlayer = function(sio, userData, armyId, callback) {
 	var query = 'UPDATE users SET armies = ? WHERE id = ?'
 	  , armyList = JSON.parse(userData.armies);
 	armyList.push(armyId);
 	var values = [JSON.stringify(armyList), userData.id];
 
 	db.query(query, values, callback);
-	sio.sockets.in(userData.username).emit('newArmy', {'armyId' : armyId});
+	// sio.sockets.in(userData.username).emit('newArmy', {'armyId' : armyId});
 }
 
 function eastCoastTime() {
