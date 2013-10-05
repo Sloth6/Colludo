@@ -284,7 +284,7 @@ function fillWorld(armies, cities, battles, callback) {
 }
 
 
-function makeTextSprite( message, parameters )
+function makeTextSprite( message, flag, parameters)
 {
 	if ( parameters === undefined ) parameters = {};
 	
@@ -304,11 +304,11 @@ function makeTextSprite( message, parameters )
 		parameters["backgroundColor"] : { r:255, g:255, b:255, a:1.0 };
 
 	var spriteAlignment = THREE.SpriteAlignment.bottomLeft;
-		
+	console.log(THREE.SpriteAlignment);
 	var canvas = document.createElement('canvas');
 	var context = canvas.getContext('2d');
 	context.font = "Bold " + fontsize + "px " + fontface;
-    
+  
 	// get size data (height depends only on font size)
 	var metrics = context.measureText( message );
 	var textWidth = metrics.width;
@@ -321,16 +321,27 @@ function makeTextSprite( message, parameters )
 								  + borderColor.b + "," + borderColor.a + ")";
 
 	context.lineWidth = borderThickness;
-	roundRect(context, borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
+	roundRect(context, borderThickness/2, borderThickness/2, textWidth +32+ borderThickness, fontsize * 1.4 + borderThickness, 6);
+
+	try{
+		// console.log(flag, borderThickness);
+		context.drawImage(flag, 1,0, 32, 32);
+	} catch(err){
+		console.log("err", err, flag);
+	}
+
+	
 	// 1.4 is extra height factor for text below baseline: g,j,p,q.
 	
 	// text color
 	context.fillStyle = "rgba(0, 0, 0, 1.0)";
 
-	context.fillText( message, borderThickness, fontsize + borderThickness);
-	
+	context.fillText( message, borderThickness + 32, fontsize + borderThickness);
+	console.log(canvas.width, canvas.height);
 	// canvas contents will be used for a texture
 	var texture = new THREE.Texture(canvas) 
+	console.log(texture);
+	// texture.image.height = 50;
 	texture.needsUpdate = true;
 
 	var spriteMaterial = new THREE.SpriteMaterial( 
@@ -338,6 +349,7 @@ function makeTextSprite( message, parameters )
 	var sprite = new THREE.Sprite( spriteMaterial );
 	sprite.scale.set(100,50,1.0);
 	sprite.width = textWidth + borderThickness;
+	console.log("sprite:", sprite);
 	return sprite;	
 }
 

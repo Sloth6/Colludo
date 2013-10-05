@@ -5,6 +5,7 @@
 var Army = (function(){
 	
 	function Army(id, tileId, owner, soldiers, calvary, mesh) {
+		var self = this;
 		// create world object. 
 		var geometry = new THREE.SphereGeometry( 6, 4, 4 );
 		var material = new THREE.MeshLambertMaterial( { color: 0x333333 } );
@@ -20,11 +21,19 @@ var Army = (function(){
 		this.soldiers = soldiers;
 		this.calvary = calvary;
 
-
-		this.label = makeTextSprite( this.name, 
-			{ fontsize: 18, borderColor: {r:255, g:0, b:0, a:1.0}, backgroundColor: {r:255, g:100, b:100, a:0.8} } );
-		this.label.position = this.mesh.position;
-		scene.add( this.label );
+		this.labelOffset = new THREE.Vector3( -5, -10, 25 );
+		console.log(this.labelOffset);
+		var flag = document.createElement('img');
+	  
+	  flag.onload = function() {
+			self.label = makeTextSprite( self.soldiers, flag,
+				{ fontsize: 18, borderColor: {r:126, g:126, b:126, a:.8}, backgroundColor: {r:100, g:100, b:100, a:0.6} } );
+			console.log(!!self.labelOffset);
+			self.label.position.addVectors(self.mesh.position, self.labelOffset);
+			scene.add( self.label );
+		}
+		flag.src = '/img/flags/usa.png';
+		// flag.src = 'http://www.9jafiles.com/image/data/Usa-Flag.png';
 	}
 
 	/**

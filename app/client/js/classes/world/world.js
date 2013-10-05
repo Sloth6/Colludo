@@ -82,11 +82,10 @@ World.prototype.addCity = function(city) {
 	scene.add(cityMesh);
 	world.cities[city.id] = cityMesh;
 
-	var spritey = makeTextSprite( city.name, 
-		{ fontsize: 18, borderColor: {r:0, g:0, b:255, a:1.0}, backgroundColor: {r:100, g:100, b:255, a:0.8} } );
-	spritey.position = cityMesh.position;
-	// spritey.position.y = 30;
-	scene.add( spritey );
+	// var spritey = makeTextSprite( city.name, 
+	// 	{ fontsize: 18, borderColor: {r:0, g:0, b:255, a:1.0}, backgroundColor: {r:100, g:100, b:255, a:0.8} } );
+	// spritey.position = cityMesh.position;
+	// scene.add( spritey );
 		
 	if ( world.content[city.tileId] ) {
 		world.content[city.tileId]['city'] = city.id;

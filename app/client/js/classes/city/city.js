@@ -11,6 +11,7 @@ function City(data) {
 
 	this.population = data.population;
 	this.armyId = 0;
+
 }
 
 var prices = {
